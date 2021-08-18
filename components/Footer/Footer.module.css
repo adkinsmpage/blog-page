@@ -1,0 +1,31 @@
+.wrapper {
+  padding: 10% 5%;
+  background-color: rgb(149, 149, 149);
+  border-top: 1px solid black;
+}
+.formWrapper {
+  padding: 10px;
+  background-color: rgb(53, 53, 53);
+  border-radius: 10px;
+}
+.formWrapper form {
+  display: flex;
+  flex-direction: column;
+}
+.formWrapper p {
+  font-size: 1.7rem;
+  text-align: center;
+  margin: 2% 0;
+  color: white;
+}
+.formWrapper input,
+.formWrapper textarea {
+  padding: 4%;
+  font-size: 1.5rem;
+  margin: 2% 0;
+  color: rgb(71, 71, 71);
+  border-radius: 10px;
+  border-style: none;
+  outline: none;
+  font-family: "Rubik";
+}

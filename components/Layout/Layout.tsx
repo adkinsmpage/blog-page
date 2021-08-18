@@ -1,3 +1,5 @@
+import Footer from "../Footer/Footer";
+import NavBar from "../NavBar/NavBar";
 import style from "./Layout.module.css";
 
 interface ILayout {
@@ -5,5 +7,12 @@ interface ILayout {
 }
 
 export default function Layout({ children }: ILayout) {
-  return <div className={style.wrapper}></div>;
+  return (
+    <div className={style.wrapper}>
+      <NavBar />
+      <div className={style.content}>{children}</div>
+
+      <Footer />
+    </div>
+  );
 }
