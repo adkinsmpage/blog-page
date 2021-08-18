@@ -1,0 +1,19 @@
+.wrapper {
+  padding: 10% 3%;
+  max-height: 60vh;
+  margin: 5% auto;
+}
+
+.postInformation {
+  display: flex;
+  margin: 3% auto;
+  justify-content: space-between;
+  border-bottom: 1px solid lightblue;
+  border-top: 1px solid lightblue;
+  padding: 1%;
+}
+
+.content {
+  font-size: 1.2rem;
+  margin-top: 3%;
+}
