@@ -18,14 +18,3 @@
   margin: 2% 0;
   color: white;
 }
-.formWrapper input,
-.formWrapper textarea {
-  padding: 4%;
-  font-size: 1.5rem;
-  margin: 2% 0;
-  color: rgb(71, 71, 71);
-  border-radius: 10px;
-  border-style: none;
-  outline: none;
-  font-family: "Rubik";
-}

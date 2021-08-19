@@ -1,12 +1,16 @@
 import style from "./NavBar.module.css";
 import Image from "next/dist/client/image";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function NavBar() {
   const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter();
   return (
     <div className={style.wrapper}>
-      <p className={style.logo}>1MinDev</p>
+      <p className={style.logo} onClick={() => router.push("/")}>
+        1MinDev
+      </p>
       <Image
         src="/menu.svg"
         alt="menu icon"
@@ -19,7 +23,7 @@ export default function NavBar() {
         <ul className={style.list}>
           <li>Blog</li>
           <li>Login</li>
-          <li>Github</li>
+          <li onClick={() => router.push("posts/newPost")}>Github</li>
         </ul>
       </nav>
     </div>

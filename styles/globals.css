@@ -17,3 +17,32 @@ a {
   margin: 0;
   padding: 0;
 }
+
+input,
+textarea {
+  padding: 4%;
+  font-size: 1.5rem;
+  margin: 2% 0;
+  color: rgb(71, 71, 71);
+  border-radius: 10px;
+  border-style: none;
+  outline: none;
+  font-family: "Rubik";
+  border: 1px solid black;
+}
+textarea {
+  max-width: 100%;
+}
+
+button {
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1.3rem;
+  border-style: none;
+  border: 1px solid black;
+  background-color: transparent;
+  font-family: "Rubik";
+  letter-spacing: 1.1px;
+  cursor: pointer;
+  margin: 10px 0;
+}

@@ -1,0 +1,24 @@
+.wrapper {
+}
+.wrapper h1 {
+  text-align: center;
+  margin: 40px auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
+}
+.form textarea {
+  min-height: 30vh;
+  min-width: 100%;
+}
+
+.form button {
+  width: 45%;
+  align-self: flex-end;
+
+  background-color: rgba(128, 128, 128, 0.123);
+}
