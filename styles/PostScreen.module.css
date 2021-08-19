@@ -1,0 +1,20 @@
+.wrapper {
+  padding: 4%;
+}
+.header {
+  text-align: center;
+  margin-top: 20px;
+}
+.postInfo {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-top: 1px solid darkslateblue;
+  border-bottom: 1px solid darkslateblue;
+  margin: 25px auto;
+}
+.text {
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  line-height: 1.5;
+}

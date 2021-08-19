@@ -15,7 +15,7 @@ export interface IPostElement {
   id: number;
 }
 
-const postsList: IPostElement[] = [
+export const postsList: IPostElement[] = [
   {
     title: "First Lorem ipsum dolor sit amet, consectetur adipisicing elit",
     author: "AtrykP",
