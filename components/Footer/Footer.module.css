@@ -18,3 +18,10 @@
   margin: 2% 0;
   color: white;
 }
+
+.formSubmitBtn {
+  width: 50%;
+  margin: 10px auto;
+  color: white;
+  border-color: white;
+}
