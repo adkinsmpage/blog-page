@@ -6,7 +6,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method !== "POST") return;
-
   const data = req.body;
 
   const client = await MongoClient.connect(process.env.MONGODB_LINK!);

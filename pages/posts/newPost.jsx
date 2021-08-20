@@ -3,8 +3,18 @@ import { useForm } from "react-hook-form";
 
 export default function NewPost(){
     const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
-  console.log(errors)
+  const onSubmit = async  (data)  => {
+    const response = await fetch('/api/newPost', {
+        method:"POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": 'application/json'
+        }
+    })
+
+    const postData = await response.json()
+  };
+
 
     return(
     <div className={style.wrapper}>
