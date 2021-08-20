@@ -1,4 +1,5 @@
-import { MongoClient } from "mongodb";
+import dbConnect from "../../lib/dbConnect";
+import Post from "../../models/post";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -8,11 +9,7 @@ export default async function handler(
   if (req.method !== "POST") return;
   const data = req.body;
 
-  const client = await MongoClient.connect(process.env.MONGODB_LINK!);
-
-  const db = client.db("nextBlog");
-  const collection = db.collection("posts");
-  const response = await collection.insertOne(data);
-  console.log(response);
+  await dbConnect();
+  const response = await Post.create({ ...data, author: "Pat" });
   res.status(201).json(response);
 }
