@@ -8,7 +8,7 @@ import dbConnect from "../../lib/dbConnect";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   await dbConnect();
-  const postArr = await PostModel.find({});
+  const postArr = await PostModel.find({}, { _id: 1 });
 
   const paths = postArr.map((element: IPostElement) => ({
     params: { id: element._id.toString() },
@@ -23,6 +23,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postData = await PostModel.findById(params?.id);
 
+  if (!postData) return { notFound: true };
+
   return {
     props: {
       postInfo: JSON.stringify(postData),
@@ -33,6 +35,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export default function PostScreen({
   postInfo,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  if (!postInfo) return <h1>Loading...</h1>;
   const post = JSON.parse(postInfo);
 
   const { title, author, createdAt, content } = post || {};

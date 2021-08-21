@@ -19,6 +19,9 @@ export interface IPostElement {
 export const getStaticProps: GetStaticProps = async () => {
   await dbConnect();
   const postsList = await PostModel.find({});
+
+  if (postsList.length === 0) return { notFound: true };
+
   return {
     props: { postsList: JSON.stringify(postsList) },
   };
