@@ -1,10 +1,13 @@
 import { IPostElement } from "../../pages";
 import style from "./Post.module.css";
 import { useRouter } from "next/router";
+import moment from "moment";
 
 interface IPost {
   data: IPostElement;
 }
+
+const DATA_FORMAT = "DD-MM-YYYY";
 
 export default function Post({ data }: IPost) {
   const router = useRouter();
@@ -15,12 +18,12 @@ export default function Post({ data }: IPost) {
 
   return (
     <div className={style.wrapper}>
-      <h2 onClick={() => router.push(`/posts/${data.id}`)}>
+      <h2 onClick={() => router.push(`/posts/${data._id}`)}>
         {cutText(40, data.title)}
       </h2>
       <div className={style.postInformation}>
         <p>{data.author}</p>
-        <p>{data.date}</p>
+        <p>{moment(data.createdAt).format(DATA_FORMAT)}</p>
       </div>
       <p className={style.content}>{cutText(170, data.content)}</p>
     </div>

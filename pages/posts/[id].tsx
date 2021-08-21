@@ -11,20 +11,20 @@ export default function PostScreen() {
   useEffect(() => {
     if (postInfo?.id) {
       const [post] = postsList.filter(
-        (element: IPostElement) => element.id.toString() === postInfo.id
+        (element: IPostElement) => element._id.toString() === postInfo.id
       );
       setCurrentPost(post);
     }
   }, [postInfo]);
 
-  const { title, author, date, content } = currentPost || {};
+  const { title, author, createdAt, content } = currentPost || {};
 
   return (
     <div className={style.wrapper}>
       <h1 className={style.header}>{title}</h1>
       <div className={style.postInfo}>
         <p>{author}</p>
-        <p>{date}</p>
+        <p>{createdAt}</p>
       </div>
       <p className={style.text}>{content}</p>
     </div>
