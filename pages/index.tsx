@@ -13,38 +13,11 @@ export interface IPostElement {
   author: string;
   createdAt: string;
   content: string;
-  _id: number;
+  _id: string;
 }
 
-export const postsList: IPostElement[] = [
-  {
-    title: "First Lorem ipsum dolor sit amet, consectetur adipisicing elit",
-    author: "AtrykP",
-    createdAt: "10.09.2021",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore inventore blanditiis illo quasi ducimus dolorem harum, eius quibusdam soluta, pariatur nostrum porro voluptatem! Harum pariatur dolores, aut impedit officia rem? Rerum, doloribus iste est consequatur non, dolorem, enim debitis blanditiis minus optio excepturi sed itaque. Animi architecto recusandae tenetur doloremque autem commodi non quibusdam, esse maiores, beatae velit similique! Sapiente fugiat tempora quae commodi nulla libero expedita corporis dolores recusandae cum ullam pariatur temporibus, veritatis voluptatum nemo quos nisi delectus aperiam doloremque hic laudantium. Hic quisquam dolores ad explicabo doloribus unde, adipisci provident ut quas non vel quis consectetur consequuntur repellat expedita, earum in! Porro praesentium, saepe id illo autem quam iste voluptas numquam tempore tempora facere sapiente voluptates vitae sint magnam reiciendis officia architecto. Repellat obcaecati porro minus itaque, consequatur aliquid, doloremque veniam vel quo molestias laudantium illum? Voluptas accusamus, tempore nisi optio quaerat accusantium eligendi, distinctio consequuntur dolorum, illo neque iste laboriosam omnis quidem totam provident tenetur! Rerum veritatis consectetur alias. Blanditiis et facere asperiores veniam aut voluptas ipsum. Corporis ratione est",
-    _id: 1,
-  },
-  {
-    title: "Second Lorem ipsum dolor sit amet",
-    author: "AtrykP",
-    createdAt: "11.09.2021",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore inventore blanditiis illo quasi ducimus dolorem harum, eius quibusdam soluta, pariatur nostrum porro voluptatem! Harum pariatur dolores, aut impedit officia rem? Rerum, doloribus iste est consequatur non, dolorem, enim debitis blanditiis minus optio excepturi sed itaque. Animi architecto recusandae tenetur doloremque autem commodi non quibusdam, esse maiores, beatae velit similique! Sapiente fugiat tempora quae commodi nulla libero expedita corporis dolores recusandae cum ullam pariatur temporibus, veritatis voluptatum nemo quos nisi delectus aperiam doloremque hic laudantium. Hic quisquam dolores ad explicabo doloribus unde",
-    _id: 2,
-  },
-  {
-    title: " third Lorem ipsum dolor sit amet, consectetur ",
-    author: "AtrykP",
-    createdAt: "12.09.2021",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore inventore blanditiis illo quasi ducimus dolorem harum, eius quibusdam soluta, pariatur nostrum porro voluptatem! Harum pariatur dolores, aut impedit officia rem? Rerum, doloribus iste est consequatur non, dolorem, enim debitis blanditiis minus optio excepturi sed itaque. Animi architecto recusandae tenetur doloremque autem commodi non quibusdam, esse maiores, beatae velit similique! Sapiente fugiat tempora quae commodi nulla libero expedita corporis dolores recusandae cum ullam pariatur temporibus, veritatis voluptatum nemo quos nisi delectus aperiam doloremque hic laudantium. Hic quisquam dolores ad explicabo doloribus unde, adipisci provident ut quas non vel quis consectetur consequuntur repellat expedita, earum in! Porro praesentium, saepe id illo autem quam iste voluptas numquam tempore tempora facere sapiente voluptates vitae sint magnam reiciendis officia architecto. Repellat obcaecati porro minus itaque, consequatur aliquid, doloremque veniam",
-    _id: 3,
-  },
-];
-
 export const getStaticProps: GetStaticProps = async () => {
-  dbConnect();
+  await dbConnect();
   const postsList = await PostModel.find({});
   return {
     props: { postsList: JSON.stringify(postsList) },

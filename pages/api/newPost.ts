@@ -8,7 +8,6 @@ export default async function handler(
 ) {
   if (req.method !== "POST") return;
   const data = req.body;
-
   await dbConnect();
   const response = await Post.create({ ...data, author: "Pat" });
   res.status(201).json(response);

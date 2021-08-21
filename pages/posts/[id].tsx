@@ -1,28 +1,46 @@
-import { IPostElement, postsList } from "../../pages/index";
+import { IPostElement } from "../../pages/index";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import style from "../../styles/PostScreen.module.css";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import PostModel from "../../models/post";
+import dbConnect from "../../lib/dbConnect";
 
-export default function PostScreen() {
-  const [currentPost, setCurrentPost] = useState<IPostElement>();
-  const router = useRouter();
-  const postInfo = router.query;
+export const getStaticPaths: GetStaticPaths = async () => {
+  await dbConnect();
+  const postArr = await PostModel.find({});
 
-  useEffect(() => {
-    if (postInfo?.id) {
-      const [post] = postsList.filter(
-        (element: IPostElement) => element._id.toString() === postInfo.id
-      );
-      setCurrentPost(post);
-    }
-  }, [postInfo]);
+  const paths = postArr.map((element: IPostElement) => ({
+    params: { id: element._id.toString() },
+  }));
 
-  const { title, author, createdAt, content } = currentPost || {};
+  return {
+    paths,
+    fallback: true,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const postData = await PostModel.findById(params?.id);
+
+  return {
+    props: {
+      postInfo: JSON.stringify(postData),
+    },
+  };
+};
+
+export default function PostScreen({
+  postInfo,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const post = JSON.parse(postInfo);
+
+  const { title, author, createdAt, content } = post || {};
 
   return (
     <div className={style.wrapper}>
       <h1 className={style.header}>{title}</h1>
-      <div className={style.postInfo}>
+      <div className={style.post}>
         <p>{author}</p>
         <p>{createdAt}</p>
       </div>
