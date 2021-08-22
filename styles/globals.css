@@ -46,3 +46,9 @@ button {
   cursor: pointer;
   margin: 10px 0;
 }
+.secondary-btn {
+  border: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin: 0 auto;
+}

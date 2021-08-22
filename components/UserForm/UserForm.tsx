@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import style from "./UserForm.module.css";
+import { useRouter } from "next/router";
 
 interface IUserForm {
   callback(formData: IUserFormData): void;
@@ -21,6 +22,7 @@ const UserForm = ({ isRegister, callback }: IUserForm) => {
   const onSubmit = (data: IUserFormData) => {
     callback(data);
   };
+  const router = useRouter();
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.wrapper}>
       <input
@@ -41,6 +43,15 @@ const UserForm = ({ isRegister, callback }: IUserForm) => {
         />
       )}
       <button>{isRegister ? "Signup" : "Login"}</button>
+      <button
+        type="button"
+        className="secondary-btn"
+        onClick={() =>
+          router.push(`${isRegister ? "/user/login" : "/user/signup"}`)
+        }
+      >
+        {isRegister ? "Login" : "Signup"}
+      </button>
     </form>
   );
 };

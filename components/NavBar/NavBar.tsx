@@ -6,6 +6,12 @@ import { useRouter } from "next/router";
 export default function NavBar() {
   const [isVisible, setIsVisible] = useState(false);
   const router = useRouter();
+
+  const goTo = (path: string) => {
+    setIsVisible(false);
+    router.push(path);
+  };
+
   return (
     <div className={style.wrapper}>
       <p className={style.logo} onClick={() => router.push("/")}>
@@ -21,9 +27,9 @@ export default function NavBar() {
       />
       <nav className={isVisible ? style.navVisible : style.nav}>
         <ul className={style.list}>
-          <li>Blog</li>
-          <li>Login</li>
-          <li onClick={() => router.push("posts/newPost")}>Github</li>
+          <li onClick={() => goTo("/")}>Blog</li>
+          <li onClick={() => goTo("user/login")}>Login</li>
+          <li onClick={() => goTo("https://github.com/atrykp")}>Github</li>
         </ul>
       </nav>
     </div>
