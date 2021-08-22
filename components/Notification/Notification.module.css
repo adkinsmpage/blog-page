@@ -1,0 +1,19 @@
+.wrapper {
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  padding: 10px;
+}
+.title {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.message {
+  color: white;
+  text-align: center;
+}
