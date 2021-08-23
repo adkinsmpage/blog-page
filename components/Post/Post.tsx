@@ -2,12 +2,11 @@ import { IPostElement } from "../../pages";
 import style from "./Post.module.css";
 import { useRouter } from "next/router";
 import moment from "moment";
+import { DATA_FORMAT } from "../../utils/consts";
 
 interface IPost {
   data: IPostElement;
 }
-
-const DATA_FORMAT = "DD-MM-YYYY";
 
 export default function Post({ data }: IPost) {
   const router = useRouter();

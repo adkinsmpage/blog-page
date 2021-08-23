@@ -9,6 +9,10 @@ export default async function handler(
   if (req.method !== "POST") return;
   const userData = req.body;
   await dbConnect();
-  const response = await User.create(userData);
+  const response = await User.create({
+    name: userData.name,
+    password: userData.password,
+    email: userData.email,
+  });
   res.status(201).json(response);
 }
