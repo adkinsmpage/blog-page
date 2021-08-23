@@ -1,15 +1,16 @@
+import { useContext } from "react";
+import NotificationContext, {
+  INotificationObj,
+} from "../../store/notificationContext";
 import style from "./Notification.module.css";
 
-interface INotification {
-  notificationData: {
-    title: string;
-    message: string;
-    status: string;
-  };
+interface INotificationProps {
+  notificationObj: INotificationObj;
 }
 
-export default function Notification({ notificationData }: INotification) {
-  const { title, message, status } = notificationData;
+export default function Notification({ notificationObj }: INotificationProps) {
+  const { title, message, status } = notificationObj;
+  const notificationCtx = useContext(NotificationContext);
   return (
     <div
       className={style.wrapper}
@@ -22,6 +23,7 @@ export default function Notification({ notificationData }: INotification) {
             : "darkblue"
         }`,
       }}
+      onClick={notificationCtx.hideNotification}
     >
       <p className={style.title}>{title}</p>
       <p className={style.message}>{message}</p>

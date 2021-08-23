@@ -1,12 +1,15 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "../components/Layout/Layout";
+import { NotificationContextProvider } from "../store/notificationContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <NotificationContextProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </NotificationContextProvider>
   );
 }
 export default MyApp;
