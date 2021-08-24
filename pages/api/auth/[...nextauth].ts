@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import dbConnect from "../../../lib/dbConnect";
+import user from "../../../models/user";
 
 import User from "../../../models/user";
 
@@ -13,6 +14,7 @@ export default NextAuth({
   session: {
     jwt: true,
   },
+
   providers: [
     Providers.Credentials({
       async authorize(credentials: any) {
