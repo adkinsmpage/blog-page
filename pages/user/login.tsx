@@ -1,9 +1,14 @@
 import UserForm, { IUserFormData } from "../../components/UserForm/UserForm";
 import style from "../../styles/Form.module.css";
+import { signIn } from "next-auth/client";
 
 function Login() {
-  const userLogin = (formData: IUserFormData) => {
-    console.log(formData);
+  const userLogin = async (formData: IUserFormData) => {
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: formData.email,
+      password: formData.password,
+    });
   };
   return (
     <div className={style.wrapper}>
