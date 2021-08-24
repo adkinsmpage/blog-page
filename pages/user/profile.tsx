@@ -1,13 +1,29 @@
-import { getSession, useSession } from "next-auth/client";
-import { useEffect } from "react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { getSession } from "next-auth/client";
 
-export default function ProfileScreen() {
-  const sessionHandler = async () => {
-    const session = await getSession();
-  };
-  useEffect(() => {
-    sessionHandler();
-  }, []);
-
-  return <h1>Profile Screen</h1>;
+export default function ProfileScreen({
+  session,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  return (
+    <div>
+      <h1>Profile page</h1>
+      <h2>{session.user.email}</h2>
+    </div>
+  );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/user/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+};
