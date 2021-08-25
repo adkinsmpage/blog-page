@@ -42,7 +42,12 @@ export default function NavBar() {
             {session ? "Profile" : "Login"}
           </li>
           <li onClick={() => goTo("https://github.com/atrykp")}>Github</li>
-          {session && <li onClick={logoutHandler}>Logout</li>}
+          {session && (
+            <>
+              <li onClick={logoutHandler}>Logout</li>
+              <li onClick={() => goTo("/posts/newPost")}>New Post</li>
+            </>
+          )}
         </ul>
       </nav>
     </div>

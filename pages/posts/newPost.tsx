@@ -1,27 +1,26 @@
 import style from "../../styles/NewPost.module.css";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { getSession } from "next-auth/client";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 interface INewPost {
   title: string;
   content: string;
 }
 
-export default function NewPost() {
+export default function NewPost({
+  session,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = async (data: INewPost) => {
-    const response = await fetch("/api/newPost", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const post = { ...data, author: session.user.email };
 
-    const postData = await response.json();
+    const { data: response } = await axios.post("/api/newPost", post);
   };
 
   return (
@@ -43,3 +42,17 @@ export default function NewPost() {
     </div>
   );
 }
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/user/login",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+};
