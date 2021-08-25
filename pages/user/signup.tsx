@@ -3,7 +3,9 @@ import style from "../../styles/Form.module.css";
 import axios from "axios";
 import { useContext } from "react";
 import NotificationContext from "../../store/notificationContext";
-import { signIn } from "next-auth/client";
+import { getSession, signIn } from "next-auth/client";
+import router from "next/router";
+import { GetServerSideProps } from "next";
 
 function Signup() {
   const notificationCtx = useContext(NotificationContext);
@@ -26,6 +28,7 @@ function Signup() {
           email: formData.email,
           password: formData.password,
         });
+        if (!result?.error) router.push("/user/profile");
       }
     } catch (error) {
       notificationCtx.showNotification({
@@ -44,5 +47,20 @@ function Signup() {
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+  if (session) {
+    return {
+      redirect: {
+        destination: "/user/profile",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+};
 
 export default Signup;
