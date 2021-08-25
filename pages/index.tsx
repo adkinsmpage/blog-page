@@ -34,11 +34,12 @@ const Home: NextPage = ({
 
   useEffect(() => {
     if (!postsList) return;
-    const postsArr = JSON.parse(postsList).map((element: any) => (
+    const postsArr = JSON.parse(postsList).map((element: IPostElement) => (
       <Post key={element._id} data={element} />
     ));
     setPosts(postsArr);
-  }, []);
+  }, [postsList]);
+
   return (
     <>
       <Head>

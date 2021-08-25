@@ -5,10 +5,10 @@ import user from "../../../models/user";
 
 import User from "../../../models/user";
 
-interface ICredentials {
+type TypeCredentials = {
   email: string;
   password: string;
-}
+};
 
 export default NextAuth({
   session: {
@@ -17,7 +17,7 @@ export default NextAuth({
 
   providers: [
     Providers.Credentials({
-      async authorize(credentials: any) {
+      async authorize(credentials: TypeCredentials) {
         await dbConnect();
 
         const user = await User.findOne({ email: credentials.email });

@@ -1,13 +1,18 @@
 import style from "../../styles/NewPost.module.css";
 import { useForm } from "react-hook-form";
 
+interface INewPost {
+  title: string;
+  content: string;
+}
+
 export default function NewPost() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: INewPost) => {
     const response = await fetch("/api/newPost", {
       method: "POST",
       body: JSON.stringify(data),

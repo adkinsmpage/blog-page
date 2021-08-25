@@ -5,9 +5,11 @@ import { useContext } from "react";
 import NotificationContext from "../../store/notificationContext";
 import { getSession, signIn } from "next-auth/client";
 import router from "next/router";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-function Signup() {
+function Signup({
+  session,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const notificationCtx = useContext(NotificationContext);
   const userSignup = async (formData: IUserFormData) => {
     notificationCtx.showNotification({

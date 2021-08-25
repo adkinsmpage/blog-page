@@ -1,6 +1,12 @@
 import style from "./Footer.module.css";
 import { useForm } from "react-hook-form";
 
+interface IEmailMessage {
+  name: string;
+  email: string;
+  content: string;
+}
+
 const EMAIL_VALIDATION = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Footer() {
@@ -9,7 +15,7 @@ export default function Footer() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: IEmailMessage) => console.log(data);
 
   return (
     <div className={style.wrapper}>
