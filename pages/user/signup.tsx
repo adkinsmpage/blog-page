@@ -1,30 +1,27 @@
-import UserForm, { IUserFormData } from "../../components/UserForm/UserForm";
-import style from "../../styles/Form.module.css";
-import axios from "axios";
 import { useContext } from "react";
-import NotificationContext from "../../store/notificationContext";
+import axios from "axios";
 import { getSession, signIn } from "next-auth/client";
 import router from "next/router";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
+import { useCreateStatus } from "../../lib/createStatus";
+
+import UserForm, { IUserFormData } from "../../components/UserForm/UserForm";
+
+import style from "../../styles/Form.module.css";
+
 function Signup({
   session,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const notificationCtx = useContext(NotificationContext);
+  const { createStatus } = useCreateStatus();
+
   const userSignup = async (formData: IUserFormData) => {
-    notificationCtx.showNotification({
-      title: "Registering...",
-      message: "Creating your account",
-      status: "pending",
-    });
+    createStatus("Registering...", "Creating your account", "pending");
+
     try {
       const data = await axios.post("/api/auth/signup", formData);
       if (data) {
-        notificationCtx.showNotification({
-          title: "Success",
-          message: "Login now to your account",
-          status: "success",
-        });
+        createStatus("Success", "Login now to your account", "success");
         const result = await signIn("credentials", {
           redirect: false,
           email: formData.email,
@@ -33,13 +30,14 @@ function Signup({
         if (!result?.error) router.push("/user/profile");
       }
     } catch (error) {
-      notificationCtx.showNotification({
-        title: "Error",
-        message: error.message || "Sorry, something went wrong",
-        status: "error",
-      });
+      createStatus(
+        "Error",
+        error.message || "Sorry, something went wrong",
+        "error"
+      );
     }
   };
+
   return (
     <div className={style.wrapper}>
       <h1>SignUp</h1>

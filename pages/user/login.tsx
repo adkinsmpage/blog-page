@@ -1,20 +1,21 @@
-import UserForm, { IUserFormData } from "../../components/UserForm/UserForm";
-import style from "../../styles/Form.module.css";
+import { useCallback, useEffect, useState } from "react";
 import { getSession, signIn } from "next-auth/client";
 import { useRouter } from "next/router";
-import { useCallback, useContext, useEffect, useState } from "react";
-import NotificationContext from "../../store/notificationContext";
+
+import { useCreateStatus } from "../../lib/createStatus";
+
+import UserForm, { IUserFormData } from "../../components/UserForm/UserForm";
+
+import style from "../../styles/Form.module.css";
 
 function Login() {
   const [isLoading, setIsLoading] = useState(true);
+
+  const { createStatus } = useCreateStatus();
   const router = useRouter();
-  const notificationCtx = useContext(NotificationContext);
+
   const userLogin = async (formData: IUserFormData) => {
-    notificationCtx.showNotification({
-      title: "Loading",
-      message: "Waiting for server",
-      status: "pending",
-    });
+    createStatus("Loading", "Waiting for server", "pending");
     const result = await signIn("credentials", {
       redirect: false,
       email: formData.email,
@@ -22,23 +23,16 @@ function Login() {
     });
 
     if (!result?.error) {
-      notificationCtx.showNotification({
-        title: "Success",
-        message: "Welcome",
-        status: "success",
-      });
+      createStatus("Success", "Welcome", "success");
       router.push("/user/profile");
     } else {
-      notificationCtx.showNotification({
-        title: "Error",
-        message: `${result?.error}`,
-        status: "error",
-      });
+      createStatus("Error", `${result?.error}`, "error");
     }
   };
 
   const checkSession = useCallback(async () => {
     const session = await getSession();
+
     if (session) return router.push("/user/profile");
     setIsLoading(false);
   }, [router]);
