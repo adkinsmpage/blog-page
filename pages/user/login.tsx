@@ -33,7 +33,9 @@ function Login() {
   const checkSession = useCallback(async () => {
     const session = await getSession();
 
-    if (session) return router.push("/user/profile");
+    if (session) {
+      router.push("/user/profile");
+    }
     setIsLoading(false);
   }, [router]);
 

@@ -7,6 +7,7 @@ import PostList from "../components/PostList/PostList";
 import dbConnect from "../lib/dbConnect";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import { useAppSelector } from "../store/hooks";
 
 export interface IPostElement {
   title: string;
