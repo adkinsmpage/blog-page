@@ -11,13 +11,13 @@ import "../styles/globals.css";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <NotificationContextProvider>
-      <StoreProvider store={store}>
-        <Provider session={pageProps.session}>
+      <Provider session={pageProps.session}>
+        <StoreProvider store={store}>
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </Provider>
-      </StoreProvider>
+        </StoreProvider>
+      </Provider>
     </NotificationContextProvider>
   );
 }
