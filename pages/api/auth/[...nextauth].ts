@@ -14,6 +14,16 @@ export default NextAuth({
   session: {
     jwt: true,
   },
+  callbacks: {
+    async jwt(token) {
+      return token;
+    },
+    async session(session, token) {
+      session.user = { name: token.name, email: token.email };
+      session.id = token.sub;
+      return session;
+    },
+  },
 
   providers: [
     Providers.Credentials({
@@ -33,7 +43,7 @@ export default NextAuth({
         if (!isPasswordCorrect) {
           throw new Error("Could not log you in");
         }
-        return { email: user.email };
+        return { email: user.email, name: user.name, id: user._id };
       },
     }),
   ],

@@ -5,7 +5,6 @@ import PostModel from "../models/post";
 import Post from "../components/Post/Post";
 import PostList from "../components/PostList/PostList";
 import dbConnect from "../lib/dbConnect";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 
 export interface IPostElement {
