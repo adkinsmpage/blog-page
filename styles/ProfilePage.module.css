@@ -1,0 +1,24 @@
+.wrapper {
+  display: grid;
+  padding: 5%;
+}
+.header {
+  margin: 5vh 0;
+}
+.wrapper p {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.wrapper p span {
+  font-size: 1.3rem;
+  font-weight: normal;
+}
+.wrapper button {
+  margin-top: 40px;
+}
+.updateBtn {
+  width: 130px;
+  height: 50px;
+  border-radius: 100px;
+  padding: 0;
+}
