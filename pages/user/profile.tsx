@@ -1,5 +1,5 @@
 import style from "../../styles/ProfilePage.module.css";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import dbConnect from "../../lib/dbConnect";
 import User from "../../models/user";
@@ -7,6 +7,7 @@ import { UserState } from "../../store/slices/userInfoSlice";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { EMAIL_VALIDATION, PASSWORD_VALIDATION } from "../../utils/consts";
+import axios from "axios";
 
 interface IProfileScreen {
   session: any;
@@ -16,7 +17,7 @@ interface IProfileScreen {
 type Inputs = {
   email: string;
   name: string;
-  password: string;
+  password?: string;
 };
 
 export default function ProfileScreen({ session, userInfo }: IProfileScreen) {
@@ -28,13 +29,22 @@ export default function ProfileScreen({ session, userInfo }: IProfileScreen) {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    if (!data.password) {
+      delete data.password;
+    }
+
+    const { data: updatedData } = await axios.post("/api/user", {
+      ...data,
+      id: session.id,
+    });
+  };
 
   return (
     <div className={style.wrapper}>
       <h1 className={style.header}>Profile page</h1>
       {!isEdit && (
-        <>
+        <div className={style.userData}>
           <p>
             <span>email:</span> {userInfo.email}
           </p>
@@ -44,24 +54,33 @@ export default function ProfileScreen({ session, userInfo }: IProfileScreen) {
           <p>
             <span>password:</span>*****
           </p>
-        </>
+        </div>
       )}
       {isEdit && (
         <>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
               defaultValue={userInfo.email}
+              placeholder="new email"
               {...register("email", { pattern: EMAIL_VALIDATION })}
             />
+            {errors.email && (
+              <p className={style.errorMessage}>invalid email</p>
+            )}
             <input
+              placeholder="new name"
               defaultValue={userInfo.name}
               {...register("name", { minLength: 3 })}
             />
+            {errors.name && <p className={style.errorMessage}>invalid name</p>}
             <input
               placeholder="new password"
               type="password"
               {...register("password", { pattern: PASSWORD_VALIDATION })}
             />
+            {errors.password && (
+              <p className={style.errorMessage}>invalid password</p>
+            )}
             <input type="submit" value="UPDATE" className={style.updateBtn} />
           </form>
         </>

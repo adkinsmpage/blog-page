@@ -5,15 +5,15 @@
 .header {
   margin: 5vh 0;
 }
-.wrapper p {
+.userData p {
   font-size: 1.3rem;
   font-weight: bold;
 }
-.wrapper p span {
+.userData p span {
   font-size: 1.3rem;
   font-weight: normal;
 }
-.wrapper button {
+.userData button {
   margin-top: 40px;
 }
 .updateBtn {
@@ -21,4 +21,11 @@
   height: 50px;
   border-radius: 100px;
   padding: 0;
+}
+
+.errorMessage {
+  color: red;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  font-weight: lighter;
 }

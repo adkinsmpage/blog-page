@@ -15,13 +15,14 @@ export default NextAuth({
     jwt: true,
   },
   callbacks: {
-    async jwt(token) {
+    jwt(token, profile) {
+      if (profile) {
+        return { ...token, user: profile };
+      }
       return token;
     },
-    async session(session, token) {
-      session.user = { name: token.name, email: token.email };
-      session.id = token.sub;
-      return session;
+    session(session, token) {
+      return token;
     },
   },
 
@@ -43,7 +44,13 @@ export default NextAuth({
         if (!isPasswordCorrect) {
           throw new Error("Could not log you in");
         }
-        return { email: user.email, name: user.name, id: user._id };
+
+        return {
+          email: user.email,
+          name: user.name,
+          id: user._id,
+          isAdmin: user.isAdmin,
+        };
       },
     }),
   ],
