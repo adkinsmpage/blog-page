@@ -11,7 +11,12 @@ import "../styles/globals.css";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <NotificationContextProvider>
-      <Provider session={pageProps.session}>
+      <Provider
+        session={pageProps.session}
+        options={{
+          clientMaxAge: 10,
+        }}
+      >
         <StoreProvider store={store}>
           <Layout>
             <Component {...pageProps} />

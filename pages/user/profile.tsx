@@ -9,6 +9,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { EMAIL_VALIDATION, PASSWORD_VALIDATION } from "../../utils/consts";
 import axios from "axios";
 import { useCreateStatus } from "../../lib/createStatus";
+import { useRouter } from "next/router";
 
 interface IProfileScreen {
   session: any;
@@ -24,6 +25,7 @@ type Inputs = {
 export default function ProfileScreen({ session, userInfo }: IProfileScreen) {
   const [isEdit, setIsEdit] = useState(false);
   const { createStatus } = useCreateStatus();
+  const route = useRouter();
 
   const {
     register,
@@ -47,6 +49,7 @@ export default function ProfileScreen({ session, userInfo }: IProfileScreen) {
       }
 
       createStatus("Success", "your data was updated", "success");
+      route.reload();
     } catch (error) {
       createStatus("Error", `${error.message}`, "error");
     }
@@ -58,10 +61,10 @@ export default function ProfileScreen({ session, userInfo }: IProfileScreen) {
       {!isEdit && (
         <div className={style.userData}>
           <p>
-            <span>email:</span> {userInfo.email}
+            <span>email:</span> {userInfo?.email}
           </p>
           <p>
-            <span>name:</span> {userInfo.name}
+            <span>name:</span> {userInfo?.name}
           </p>
           <p>
             <span>password:</span>*****
@@ -106,6 +109,7 @@ export default function ProfileScreen({ session, userInfo }: IProfileScreen) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
+
   if (!session) {
     return {
       redirect: {
@@ -116,14 +120,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   await dbConnect();
-  const userInfo = await User.findOne({ email: session?.user?.email });
+  const userInfo = await User.findById(session?.user?.id);
 
   return {
     props: {
       session,
       userInfo: {
-        name: userInfo.name,
-        email: userInfo.email,
+        name: userInfo?.name,
+        email: userInfo?.email,
       },
     },
   };

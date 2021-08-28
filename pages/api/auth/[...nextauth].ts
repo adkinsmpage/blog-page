@@ -16,12 +16,12 @@ export default NextAuth({
   callbacks: {
     jwt(token, profile) {
       if (profile) {
-        return { ...token, user: profile };
+        return { user: profile };
       }
       return token;
     },
     session(session, token) {
-      return token;
+      return token as any;
     },
   },
 
