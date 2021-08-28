@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { EMAIL_VALIDATION, PASSWORD_VALIDATION } from "../../utils/consts";
 import axios from "axios";
+import { useCreateStatus } from "../../lib/createStatus";
 
 interface IProfileScreen {
   session: any;
@@ -22,6 +23,7 @@ type Inputs = {
 
 export default function ProfileScreen({ session, userInfo }: IProfileScreen) {
   const [isEdit, setIsEdit] = useState(false);
+  const { createStatus } = useCreateStatus();
 
   const {
     register,
@@ -30,14 +32,24 @@ export default function ProfileScreen({ session, userInfo }: IProfileScreen) {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    createStatus("Waiting...", "waiting for server", "pending");
     if (!data.password) {
       delete data.password;
     }
 
-    const { data: updatedData } = await axios.post("/api/user", {
-      ...data,
-      id: session.id,
-    });
+    try {
+      const { data: updatedData } = await axios.post("/api/user", {
+        data,
+        id: session.user.id,
+      });
+      if (updatedData.status === 404 || !updatedData) {
+        createStatus("Error", "something went wrong", "error");
+      }
+
+      createStatus("Success", "your data was updated", "success");
+    } catch (error) {
+      createStatus("Error", `${error.message}`, "error");
+    }
   };
 
   return (
