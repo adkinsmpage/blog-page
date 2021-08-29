@@ -38,7 +38,7 @@ export default function Post({ data }: IPost) {
         <p>{moment(data.createdAt).format(DATA_FORMAT)}</p>
       </div>
       <p className={style.content}>{cutText(170, data.content)}</p>
-      {session.user.isAdmin && <p className={style.edit}>edit</p>}
+      {session?.user?.isAdmin && <p className={style.edit}>edit</p>}
     </div>
   );
 }

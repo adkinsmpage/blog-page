@@ -1,14 +1,17 @@
-import { IPostElement } from "../../pages/index";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import style from "../../styles/PostScreen.module.css";
+import { IPostElement } from "../../index";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+// import style from "../../styles/PostScreen.module.css";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import PostModel from "../../models/post";
-import dbConnect from "../../lib/dbConnect";
+import PostModel from "../../../models/post";
+import dbConnect from "../../../lib/dbConnect";
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  console.log("elooooooooooooooooooooooooooooooooooooooooooo");
+
   await dbConnect();
   const postArr = await PostModel.find({}, { _id: 1 });
+  console.log(postArr);
 
   const paths = postArr.map((element: IPostElement) => ({
     params: { id: element._id.toString() },
@@ -21,8 +24,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  console.log("hello");
-
   const postData = await PostModel.findById(params?.id);
 
   if (!postData) return { notFound: true };
@@ -34,22 +35,23 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   };
 };
 
-export default function PostScreen({
+export default function EditPost({
   postInfo,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   if (!postInfo) return <h1>Loading...</h1>;
   const post = JSON.parse(postInfo);
+  console.log("hello");
 
   const { title, author, createdAt, content } = post || {};
 
   return (
-    <div className={style.wrapper}>
-      <h1 className={style.header}>{title}</h1>
-      <div className={style.post}>
-        <p>{author}</p>
-        <p>{createdAt}</p>
-      </div>
-      <p className={style.text}>{content}</p>
+    <div>
+      <form action="">
+        <input type="text" />
+        <textarea></textarea>
+        <button>Update Post</button>
+        <button>Cancel</button>
+      </form>
     </div>
   );
 }
