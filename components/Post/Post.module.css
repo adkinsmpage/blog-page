@@ -2,6 +2,7 @@
   padding: 10% 3%;
   max-height: 60vh;
   margin: 5% auto;
+  position: relative;
 }
 
 .postInformation {
@@ -16,4 +17,10 @@
 .content {
   font-size: 1.2rem;
   margin-top: 3%;
+}
+.edit {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  color: darkblue;
 }
