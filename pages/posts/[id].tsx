@@ -1,6 +1,4 @@
 import { IPostElement } from "../../pages/index";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import style from "../../styles/PostScreen.module.css";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import PostModel from "../../models/post";

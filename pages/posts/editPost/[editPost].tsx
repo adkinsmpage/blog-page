@@ -1,5 +1,6 @@
 import { IPostElement } from "../../index";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/router";
 
 import style from "../../../styles/EditPost.module.css";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
@@ -40,6 +41,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export default function EditPost({
   postInfo,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -72,7 +74,9 @@ export default function EditPost({
         {errors.content && <p>field is required</p>}
         <div className={style.buttonsWrapper}>
           <button type="submit">Update Post</button>
-          <button type="button">Cancel</button>
+          <button type="button" onClick={() => router.back()}>
+            Cancel
+          </button>
         </div>
       </form>
     </div>

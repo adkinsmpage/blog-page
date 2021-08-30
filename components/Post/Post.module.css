@@ -24,3 +24,9 @@
   bottom: 0;
   color: darkblue;
 }
+.remove {
+  position: absolute;
+  right: 45px;
+  bottom: 0;
+  color: darkred;
+}

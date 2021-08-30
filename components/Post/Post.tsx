@@ -5,6 +5,7 @@ import moment from "moment";
 import { DATA_FORMAT } from "../../utils/consts";
 import { getSession } from "next-auth/client";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface IPost {
   data: IPostElement;
@@ -27,6 +28,9 @@ export default function Post({ data }: IPost) {
     if (text.length <= length) return text;
     return `${text.substr(0, length)}...`;
   };
+  const removePost = async () => {
+    const { data: response } = await axios.delete(`/api/post/${data._id}`);
+  };
 
   return (
     <div className={style.wrapper}>
@@ -38,7 +42,19 @@ export default function Post({ data }: IPost) {
         <p>{moment(data.createdAt).format(DATA_FORMAT)}</p>
       </div>
       <p className={style.content}>{cutText(170, data.content)}</p>
-      {session?.user?.isAdmin && <p className={style.edit}>edit</p>}
+      {session?.user?.isAdmin && (
+        <>
+          <p
+            className={style.edit}
+            onClick={() => router.push(`/posts/editPost/${data._id}`)}
+          >
+            edit
+          </p>
+          <p className={style.remove} onClick={removePost}>
+            remove
+          </p>
+        </>
+      )}
     </div>
   );
 }
