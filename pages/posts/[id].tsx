@@ -21,8 +21,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  console.log("hello");
-
   const postData = await PostModel.findById(params?.id);
 
   if (!postData) return { notFound: true };
