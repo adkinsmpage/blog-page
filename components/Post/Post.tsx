@@ -6,6 +6,9 @@ import { DATA_FORMAT } from "../../utils/consts";
 import { getSession } from "next-auth/client";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useCreateStatus } from "../../lib/createStatus";
+import Modal from "../Modal/Modal";
+import { route } from "next/dist/server/router";
 
 interface IPost {
   data: IPostElement;
@@ -13,6 +16,8 @@ interface IPost {
 
 export default function Post({ data }: IPost) {
   const [session, setSession] = useState<any>();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { createStatus } = useCreateStatus();
 
   const handleGetSession = async () => {
     const session = await getSession();
@@ -29,8 +34,18 @@ export default function Post({ data }: IPost) {
     return `${text.substr(0, length)}...`;
   };
   const removePost = async () => {
-    const { data: response } = await axios.delete(`/api/post/${data._id}`);
+    createStatus("Waiting...", "waiting for server", "pending");
+    try {
+      const { data: response } = await axios.delete(`/api/post/${data._id}`);
+      if (response) createStatus("Success", response.message, "success");
+      setIsModalVisible(false);
+      router.reload();
+    } catch (error) {
+      createStatus("Error", error.message, "error");
+    }
   };
+
+  const closeModal = () => setIsModalVisible(false);
 
   return (
     <div className={style.wrapper}>
@@ -50,10 +65,17 @@ export default function Post({ data }: IPost) {
           >
             edit
           </p>
-          <p className={style.remove} onClick={removePost}>
+          <p className={style.remove} onClick={() => setIsModalVisible(true)}>
             remove
           </p>
         </>
+      )}
+      {isModalVisible && (
+        <Modal
+          text="are you sure?"
+          cancelCallback={closeModal}
+          confirmCallback={removePost}
+        />
       )}
     </div>
   );

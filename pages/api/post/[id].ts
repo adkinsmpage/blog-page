@@ -11,6 +11,7 @@ export default async function handler(
   if (req.method === "DELETE") {
     dbConnect();
     const data = await Post.findByIdAndDelete(id);
-    if (data) res.send({ message: "post deleted" });
+    if (!data) res.status(404).send({ message: "post not found" });
+    res.status(200).send({ message: "post deleted" });
   }
 }
