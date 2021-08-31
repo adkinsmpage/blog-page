@@ -2,9 +2,15 @@
   display: grid;
   min-height: 70vh;
   justify-items: center;
+  width: 100%;
 }
 .form {
   text-align: center;
+  width: 100%;
+}
+.form textarea,
+.form input {
+  width: 90%;
 }
 
 .buttonsWrapper {
@@ -15,4 +21,11 @@
 .header {
   font-size: 2rem;
   align-self: center;
+}
+
+.errorMessage {
+  color: red;
+  text-align: start;
+  width: 90%;
+  margin: 0 auto 15px auto;
 }

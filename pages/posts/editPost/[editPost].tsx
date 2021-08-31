@@ -48,7 +48,7 @@ export default function EditPost({
     formState: { errors },
   } = useForm<EditInputs>();
 
-  const onSubmit: SubmitHandler<EditInputs> = async (data) => console.log(data);
+  const onSubmit: SubmitHandler<EditInputs> = async (data) => {};
 
   if (!postInfo) return <h1>Loading...</h1>;
   const post = JSON.parse(postInfo);
@@ -65,16 +65,24 @@ export default function EditPost({
           defaultValue={title}
           {...register("title", { minLength: 3, required: true })}
         />
-        {errors.title && <p>field is required</p>}
+        {errors.title && (
+          <p className={style.errorMessage}>field is required (min 3 length)</p>
+        )}
         <textarea
           placeholder="content"
           defaultValue={content}
           {...register("content", { minLength: 3, required: true })}
         ></textarea>
-        {errors.content && <p>field is required</p>}
+        {errors.content && (
+          <p className={style.errorMessage}>field is required (min 3 length)</p>
+        )}
         <div className={style.buttonsWrapper}>
           <button type="submit">Update Post</button>
-          <button type="button" onClick={() => router.back()}>
+          <button
+            className="secondary-btn"
+            type="button"
+            onClick={() => router.back()}
+          >
             Cancel
           </button>
         </div>

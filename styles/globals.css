@@ -31,10 +31,6 @@ textarea {
   border: 1px solid black;
 }
 
-textarea {
-  max-width: 100%;
-}
-
 button {
   border-radius: 25px;
   padding: 10px 20px;
