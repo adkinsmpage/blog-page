@@ -6,6 +6,8 @@ import style from "../../../styles/EditPost.module.css";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import PostModel from "../../../models/post";
 import dbConnect from "../../../lib/dbConnect";
+import axios from "axios";
+import { useCreateStatus } from "../../../lib/createStatus";
 
 type EditInputs = {
   title: string;
@@ -41,6 +43,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export default function EditPost({
   postInfo,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { createStatus } = useCreateStatus();
   const router = useRouter();
   const {
     register,
@@ -48,12 +51,21 @@ export default function EditPost({
     formState: { errors },
   } = useForm<EditInputs>();
 
-  const onSubmit: SubmitHandler<EditInputs> = async (data) => {};
-
   if (!postInfo) return <h1>Loading...</h1>;
   const post = JSON.parse(postInfo);
 
-  const { title, content } = post || {};
+  const { title, content, _id: id } = post || {};
+
+  const onSubmit: SubmitHandler<EditInputs> = async (data) => {
+    try {
+      const { data: response } = await axios.patch(`/api/post/${id}`, data);
+      if (!response) throw new Error("something went wrong");
+      createStatus("Success", response.message, "success");
+      router.push("/");
+    } catch (error) {
+      createStatus("Error", error.message, "error");
+    }
+  };
 
   return (
     <div className={style.wrapper}>
