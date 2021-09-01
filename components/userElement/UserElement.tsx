@@ -1,3 +1,5 @@
+import { useState } from "react";
+import EditUser from "../EditUser/EditUser";
 import style from "./UserElement.module.css";
 
 export interface IUser {
@@ -13,6 +15,7 @@ interface IUserElement {
 }
 
 const UserElement = ({ user }: IUserElement) => {
+  const [isEditActive, setIsEditActive] = useState(false);
   const { name, email, isAdmin } = user || {};
   return (
     <div className={style.wrapper}>
@@ -22,9 +25,10 @@ const UserElement = ({ user }: IUserElement) => {
         <p>isAdmin: {`${isAdmin}`}</p>
       </div>
       <div className={style.buttonsWrapper}>
-        <button>edit</button>
+        <button onClick={() => setIsEditActive(true)}>edit</button>
         <button>remove</button>
       </div>
+      {isEditActive && <EditUser />}
     </div>
   );
 };
