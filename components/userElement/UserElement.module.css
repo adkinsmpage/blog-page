@@ -1,0 +1,9 @@
+.wrapper {
+  background-color: rgb(224, 224, 224);
+  margin: 3% 0;
+  min-height: 15vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2%;
+}

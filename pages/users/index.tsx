@@ -1,4 +1,6 @@
 import { GetStaticProps } from "next";
+import React, { useEffect, useState } from "react";
+import UserElement, { IUser } from "../../components/userElement/UserElement";
 import dbConnect from "../../lib/dbConnect";
 import User from "../../models/user";
 
@@ -14,6 +16,14 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 export default function Users({ usersList }: any) {
-  const users = JSON.parse(usersList);
-  return <h1>users list</h1>;
+  const [usersElements, setUsersElements] = useState<React.ReactNode>();
+  useEffect(() => {
+    const users = JSON.parse(usersList);
+
+    const usersArr = users.map((elem: IUser) => (
+      <UserElement key={elem._id} user={elem} />
+    ));
+    setUsersElements(usersArr);
+  }, [usersList]);
+  return <div>{usersElements}</div>;
 }
