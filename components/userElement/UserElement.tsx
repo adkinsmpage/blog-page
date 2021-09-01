@@ -17,6 +17,14 @@ interface IUserElement {
 const UserElement = ({ user }: IUserElement) => {
   const [isEditActive, setIsEditActive] = useState(false);
   const { name, email, isAdmin } = user || {};
+
+  const closeEdit = () => {
+    setIsEditActive(false);
+  };
+
+  const updateUser = (data: any) => {
+    console.log(data);
+  };
   return (
     <div className={style.wrapper}>
       <div className={style.infoWrapper}>
@@ -28,7 +36,13 @@ const UserElement = ({ user }: IUserElement) => {
         <button onClick={() => setIsEditActive(true)}>edit</button>
         <button>remove</button>
       </div>
-      {isEditActive && <EditUser />}
+      {isEditActive && (
+        <EditUser
+          closeCallback={closeEdit}
+          confirmCallback={updateUser}
+          user={user}
+        />
+      )}
     </div>
   );
 };

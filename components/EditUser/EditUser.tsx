@@ -1,5 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { EMAIL_VALIDATION } from "../../utils/consts";
+import { IUser } from "../userElement/UserElement";
 import style from "./EditUser.module.css";
 
 interface EditUserInputs {
@@ -8,7 +9,17 @@ interface EditUserInputs {
   isAdmin: boolean;
 }
 
-export default function EditUser() {
+interface IEditUser {
+  user: IUser;
+  confirmCallback(data: any): void;
+  closeCallback(): void;
+}
+
+export default function EditUser({
+  closeCallback,
+  confirmCallback,
+  user,
+}: IEditUser) {
   const {
     register,
     handleSubmit,
@@ -16,15 +27,17 @@ export default function EditUser() {
   } = useForm<EditUserInputs>();
 
   const onSubmit: SubmitHandler<EditUserInputs> = async (data) => {
-    console.log(data);
+    confirmCallback(data);
   };
   return (
     <div className={style.background}>
       <div className={style.wrapper}>
-        <form onSubmit={handleSubmit(onSubmit)} className={style.wrapper}>
+        <p className={style.header}>Edit User</p>
+        <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
           <input
             type="text"
             placeholder="name"
+            defaultValue={user.name}
             {...register("name", { required: true })}
             className={`${errors.name ? style.error : ""}`}
           />
@@ -35,6 +48,7 @@ export default function EditUser() {
           <input
             type="text"
             placeholder="email"
+            defaultValue={user.email}
             {...register("email", {
               required: true,
               pattern: EMAIL_VALIDATION,
@@ -44,15 +58,28 @@ export default function EditUser() {
           {errors.email && (
             <p className={style.errorMessage}>Enter valid email address</p>
           )}
+          <div className={style.selectWrapper}>
+            <label htmlFor="isAdmin">is admin</label>
+            <select
+              className={style.select}
+              id="isAdmin"
+              {...register("isAdmin")}
+            >
+              <option value="false">false</option>
+              <option value="true">true</option>
+            </select>
+          </div>
 
-          <button>Update User</button>
-          <button
-            type="button"
-            className="secondary-btn"
-            onClick={() => console.log("cancel")}
-          >
-            cancel
-          </button>
+          <div className={style.buttonsWrapper}>
+            <button>Update User</button>
+            <button
+              type="button"
+              className="secondary-btn"
+              onClick={closeCallback}
+            >
+              cancel
+            </button>
+          </div>
         </form>
       </div>
     </div>
