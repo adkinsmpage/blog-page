@@ -21,4 +21,18 @@ export default async function handler(
     if (!user) return res.status(404).send({ message: "user not found" });
     res.send({ message: "user updated" });
   }
+  if (req.method === "PATCH") {
+    const { editorId, id, email, name, isAdmin } = req.body;
+    const editor = await User.findById(editorId);
+    if (!editor.isAdmin) {
+      return res.status(401).send({ message: "user not authorized" });
+    }
+    const updatedUser = await User.findByIdAndUpdate(id, {
+      email,
+      name,
+      isAdmin,
+    });
+    if (!updatedUser) res.status(404).send({ message: "something went wrong" });
+    res.send({ message: "userUpdated" });
+  }
 }

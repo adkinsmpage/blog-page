@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import EditUser from "../EditUser/EditUser";
 import style from "./UserElement.module.css";
@@ -16,14 +17,24 @@ interface IUserElement {
 
 const UserElement = ({ user }: IUserElement) => {
   const [isEditActive, setIsEditActive] = useState(false);
-  const { name, email, isAdmin } = user || {};
+  const { name, email, isAdmin, _id } = user || {};
 
   const closeEdit = () => {
     setIsEditActive(false);
   };
 
-  const updateUser = (data: any) => {
-    console.log(data);
+  const updateUser = async (data: any) => {
+    const updateUserObj = {
+      id: _id,
+      ...data,
+    };
+    try {
+      const response = await axios.patch("/api/user", updateUserObj);
+      if (!response) throw new Error("something went wrong");
+      setIsEditActive(false);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   return (
     <div className={style.wrapper}>

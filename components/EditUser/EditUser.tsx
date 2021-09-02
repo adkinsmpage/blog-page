@@ -1,3 +1,4 @@
+import { getSession } from "next-auth/client";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { EMAIL_VALIDATION } from "../../utils/consts";
 import { IUser } from "../userElement/UserElement";
@@ -27,7 +28,8 @@ export default function EditUser({
   } = useForm<EditUserInputs>();
 
   const onSubmit: SubmitHandler<EditUserInputs> = async (data) => {
-    confirmCallback(data);
+    const session = await getSession();
+    confirmCallback({ editorId: session?.user?.id, ...data });
   };
   return (
     <div className={style.background}>
