@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getSession } from "next-auth/client";
 import { useState } from "react";
+import { useCreateStatus } from "../../lib/createStatus";
 import EditUser from "../EditUser/EditUser";
 import Modal from "../Modal/Modal";
 import style from "./UserElement.module.css";
@@ -20,12 +21,16 @@ interface IUserElement {
 const UserElement = ({ user }: IUserElement) => {
   const [isEditActive, setIsEditActive] = useState(false);
   const [removeModal, setRemoveModal] = useState(false);
+
   const { name, email, isAdmin, _id } = user || {};
+
+  const { createStatus } = useCreateStatus();
 
   const closeEdit = () => {
     setIsEditActive(false);
   };
   const removeUser = async () => {
+    createStatus("Waiting...", "user deleting", "pending");
     try {
       const session = await getSession();
       const { data } = await axios.delete(
@@ -33,8 +38,9 @@ const UserElement = ({ user }: IUserElement) => {
       );
       if (!data) throw new Error("something went wrong");
       setRemoveModal(false);
+      createStatus("Success", "user deleted", "success");
     } catch (error) {
-      console.log(error);
+      createStatus("Error", error.message, "error");
     }
   };
 
@@ -43,6 +49,7 @@ const UserElement = ({ user }: IUserElement) => {
   };
 
   const updateUser = async (data: any) => {
+    createStatus("Waiting...", "user is updating", "pending");
     const updateUserObj = {
       id: _id,
       ...data,
@@ -51,8 +58,9 @@ const UserElement = ({ user }: IUserElement) => {
       const response = await axios.patch("/api/user", updateUserObj);
       if (!response) throw new Error("something went wrong");
       setIsEditActive(false);
+      createStatus("Success", "user updated", "success");
     } catch (error) {
-      console.log(error.message);
+      createStatus("Error", error.message, "error");
     }
   };
   return (
