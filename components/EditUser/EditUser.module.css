@@ -21,7 +21,7 @@
   flex-direction: column;
 }
 .header {
-  font-size: 1.6rem;
+  font-size: 2.6rem;
   padding: 10px;
 }
 .form {
@@ -46,10 +46,10 @@
 }
 
 .selectWrapper label {
-  font-size: 1.3rem;
+  font-size: 2.3rem;
 }
 .select {
-  font-size: 1.4rem;
+  font-size: 2.4rem;
   width: 100px;
   border-radius: 10px;
   text-align: center;

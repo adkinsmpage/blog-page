@@ -1,0 +1,22 @@
+.wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.loader {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  background-image: url("../../public/loading.svg");
+  background-size: 50%;
+  background-position: center;
+  animation: spin 1s infinite linear;
+  background-repeat: no-repeat;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(720deg);
+  }
+}

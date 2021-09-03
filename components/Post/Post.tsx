@@ -41,7 +41,7 @@ export default function Post({ data }: IPost) {
       setIsModalVisible(false);
       router.reload();
     } catch (error) {
-      createStatus("Error", error.message, "error");
+      createStatus("Error", "something went wrong", "error");
     }
   };
 
@@ -49,7 +49,10 @@ export default function Post({ data }: IPost) {
 
   return (
     <div className={style.wrapper}>
-      <h2 onClick={() => router.push(`/posts/${data._id}`)}>
+      <h2
+        onClick={() => router.push(`/posts/${data._id}`)}
+        className={style.title}
+      >
         {cutText(40, data.title)}
       </h2>
       <div className={style.postInformation}>

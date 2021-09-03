@@ -1,45 +1,53 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
-html,
-body {
-  font-family: "Rubik", sans-serif;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
+/* main color: #f76707 gray color: #495057 */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+html {
+  font-size: 62.5%;
+}
+html,
+body {
+  font-family: "Inter", sans-serif;
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: #f8f9fa;
+}
+body {
+  font-size: 2rem;
+}
+
+a {
+  color: #ffa94d;
+  text-decoration: none;
+}
 
 input,
 textarea {
   padding: 4%;
-  font-size: 1.5rem;
   margin: 2% 0;
   color: rgb(71, 71, 71);
   border-radius: 10px;
   border-style: none;
   outline: none;
-  font-family: "Rubik";
+  font-family: "Inter";
   border: 1px solid black;
+  font-size: 2rem;
 }
 
 button {
   border-radius: 25px;
   padding: 10px 20px;
-  font-size: 1.3rem;
   border-style: none;
-  border: 1px solid black;
+  border: 1px solid #343a40;
+  color: #343a40;
   background-color: transparent;
-  font-family: "Rubik";
+  font-family: "Inter";
   letter-spacing: 1.1px;
+  font-size: 2rem;
   cursor: pointer;
   margin: 10px 0;
 }

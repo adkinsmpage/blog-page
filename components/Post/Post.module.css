@@ -1,32 +1,36 @@
 .wrapper {
   padding: 10% 3%;
   max-height: 60vh;
-  margin: 5% auto;
+  margin: 10% auto;
   position: relative;
+}
+
+.title {
+  color: #f76707;
 }
 
 .postInformation {
   display: flex;
   margin: 3% auto;
   justify-content: space-between;
-  border-bottom: 1px solid lightblue;
-  border-top: 1px solid lightblue;
   padding: 1%;
+  font-size: 1.2rem;
 }
 
 .content {
-  font-size: 1.2rem;
+  font-size: 2.2rem;
   margin-top: 3%;
+  color: #343a40;
 }
 .edit {
   position: absolute;
   right: 10px;
   bottom: 0;
-  color: darkblue;
+  color: #ffa94d;
 }
 .remove {
   position: absolute;
-  right: 45px;
+  right: 65px;
   bottom: 0;
-  color: darkred;
+  color: #ffa94d;
 }
