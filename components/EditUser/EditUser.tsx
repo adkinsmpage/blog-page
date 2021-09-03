@@ -65,6 +65,7 @@ export default function EditUser({
             <select
               className={style.select}
               id="isAdmin"
+              defaultValue={`${user.isAdmin}`}
               {...register("isAdmin")}
             >
               <option value="false">false</option>

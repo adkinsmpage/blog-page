@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getSession } from "next-auth/client";
+import router from "next/router";
 import { useState } from "react";
 import { useCreateStatus } from "../../lib/createStatus";
 import EditUser from "../EditUser/EditUser";
@@ -38,6 +39,7 @@ const UserElement = ({ user }: IUserElement) => {
       );
       if (!data) throw new Error("something went wrong");
       setRemoveModal(false);
+      router.reload();
       createStatus("Success", "user deleted", "success");
     } catch (error) {
       createStatus("Error", error.message, "error");
@@ -58,6 +60,7 @@ const UserElement = ({ user }: IUserElement) => {
       const response = await axios.patch("/api/user", updateUserObj);
       if (!response) throw new Error("something went wrong");
       setIsEditActive(false);
+      router.reload();
       createStatus("Success", "user updated", "success");
     } catch (error) {
       createStatus("Error", error.message, "error");
