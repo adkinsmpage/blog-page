@@ -63,7 +63,7 @@ export default function EditPost({
       createStatus("Success", response.message, "success");
       router.push("/");
     } catch (error) {
-      createStatus("Error", error.message, "error");
+      createStatus("Error", "something went wrong", "error");
     }
   };
 

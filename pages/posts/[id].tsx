@@ -4,6 +4,8 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import PostModel from "../../models/post";
 import dbConnect from "../../lib/dbConnect";
 import Comments from "../../components/Comments/Comments";
+import { useSession } from "next-auth/client";
+import { useEffect, useState } from "react";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   await dbConnect();
@@ -31,13 +33,32 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   };
 };
 
+export interface ICommentData {
+  authorId: string;
+  postId: string;
+  author: string;
+}
+
 export default function PostScreen({
   postInfo,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  if (!postInfo) return <h1>Loading...</h1>;
+  const [session, loading] = useSession();
+  const [commentData, setCommentData] = useState<ICommentData>();
   const post = JSON.parse(postInfo);
 
-  const { title, author, createdAt, content } = post || {};
+  const { title, author, createdAt, content, _id } = post || {};
+
+  useEffect(() => {
+    if (session) {
+      const data = {
+        authorId: session.user.id!,
+        postId: _id,
+        author: session.user.name!,
+      };
+      setCommentData(data);
+    }
+  }, [_id, session]);
+  if (!postInfo) return <h1>Loading...</h1>;
 
   return (
     <div className={style.wrapper}>
@@ -47,7 +68,7 @@ export default function PostScreen({
         <p>{createdAt}</p>
       </div>
       <p className={style.text}>{content}</p>
-      <Comments>
+      <Comments data={commentData}>
         <p>comments list</p>
       </Comments>
     </div>
