@@ -3,6 +3,7 @@ import style from "../../styles/PostScreen.module.css";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import PostModel from "../../models/post";
 import dbConnect from "../../lib/dbConnect";
+import Comments from "../../components/Comments/Comments";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   await dbConnect();
@@ -46,6 +47,9 @@ export default function PostScreen({
         <p>{createdAt}</p>
       </div>
       <p className={style.text}>{content}</p>
+      <Comments>
+        <p>comments list</p>
+      </Comments>
     </div>
   );
 }
