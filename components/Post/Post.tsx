@@ -28,6 +28,8 @@ export default function Post({ data }: IPost) {
     handleGetSession();
   }, []);
 
+  console.log(data);
+
   const router = useRouter();
   const cutText = (length: number, text: string) => {
     if (text.length <= length) return text;

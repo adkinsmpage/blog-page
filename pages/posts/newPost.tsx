@@ -18,7 +18,7 @@ export default function NewPost({
     formState: { errors },
   } = useForm();
   const onSubmit = async (data: INewPost) => {
-    const post = { ...data, author: session.user.email };
+    const post = { ...data, author: session.user.name };
 
     const { data: response } = await axios.post("/api/newPost", post);
   };

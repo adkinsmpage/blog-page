@@ -8,6 +8,7 @@
 }
 html {
   font-size: 62.5%;
+  background-color: #f8f9fa;
 }
 html,
 body {
@@ -29,13 +30,18 @@ input,
 textarea {
   padding: 4%;
   margin: 2% 0;
-  color: rgb(71, 71, 71);
+  color: #343a40;
   border-radius: 10px;
   border-style: none;
   outline: none;
   font-family: "Inter";
-  border: 1px solid black;
+  border: 1px solid #343a40;
   font-size: 2rem;
+}
+
+input:focus,
+textarea:focus {
+  border: 1px solid #ff922b;
 }
 
 button {

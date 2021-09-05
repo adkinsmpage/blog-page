@@ -22,35 +22,39 @@ export default function NavBar() {
 
   return (
     <div className={style.wrapper}>
-      <p className={style.logo} onClick={() => router.push("/")}>
-        1MinDev
-      </p>
-      <Image
-        src="/menu.svg"
-        alt="menu icon"
-        width={40}
-        height={40}
-        className={style.menuIcon}
-        onClick={() => setIsVisible((prevValue) => !prevValue)}
-      />
-      <nav className={isVisible ? style.navVisible : style.nav}>
-        <ul className={style.list}>
-          <li onClick={() => goTo("/")}>Blog</li>
-          <li
-            onClick={() => goTo(`${session ? "/user/profile" : "/user/login"}`)}
-          >
-            {session ? "Profile" : "Login"}
-          </li>
-          <li onClick={() => goTo("https://github.com/atrykp")}>Github</li>
-          {session && <li onClick={logoutHandler}>Logout</li>}
-          {session && session.user.isAdmin && (
-            <>
-              <li onClick={() => goTo("/posts/newPost")}>New Post</li>
-              <li onClick={() => goTo("/users")}>All users</li>
-            </>
-          )}
-        </ul>
-      </nav>
+      <div className={style.navWrapper}>
+        <p className={style.logo} onClick={() => router.push("/")}>
+          1MinDev
+        </p>
+        <Image
+          src="/menu.svg"
+          alt="menu icon"
+          width={40}
+          height={40}
+          className={style.menuIcon}
+          onClick={() => setIsVisible((prevValue) => !prevValue)}
+        />
+        <nav className={isVisible ? style.navVisible : style.nav}>
+          <ul className={style.list}>
+            <li onClick={() => goTo("/")}>Blog</li>
+            <li
+              onClick={() =>
+                goTo(`${session ? "/user/profile" : "/user/login"}`)
+              }
+            >
+              {session ? "Profile" : "Login"}
+            </li>
+            <li onClick={() => goTo("https://github.com/atrykp")}>Github</li>
+            {session && <li onClick={logoutHandler}>Logout</li>}
+            {session && session.user.isAdmin && (
+              <>
+                <li onClick={() => goTo("/posts/newPost")}>New Post</li>
+                <li onClick={() => goTo("/users")}>All users</li>
+              </>
+            )}
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 }

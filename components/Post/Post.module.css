@@ -6,7 +6,8 @@
 }
 
 .title {
-  color: #f76707;
+  color: #e8590c;
+  cursor: pointer;
 }
 
 .postInformation {
@@ -14,7 +15,8 @@
   margin: 3% auto;
   justify-content: space-between;
   padding: 1%;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
+  color: #495057;
 }
 
 .content {
@@ -26,11 +28,13 @@
   position: absolute;
   right: 10px;
   bottom: 0;
-  color: #ffa94d;
+  color: #f76707;
+  cursor: pointer;
 }
 .remove {
   position: absolute;
   right: 65px;
   bottom: 0;
-  color: #ffa94d;
+  color: #f76707;
+  cursor: pointer;
 }
