@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useCreateStatus } from "../../lib/createStatus";
 import { ICommentData } from "../../pages/posts/[id]";
 import style from "./Comments.module.css";
 
@@ -18,7 +19,9 @@ const Comments = ({ children, data }: IComments) => {
     handleSubmit,
     formState: { errors },
   } = useForm<CommentInput>();
+  const { createStatus } = useCreateStatus();
   const onSubmit: SubmitHandler<CommentInput> = async (content) => {
+    createStatus("Waiting...", "waiting for server", "pending");
     if (data) {
       const { author, authorId, postId } = data;
       const comment = {
@@ -27,7 +30,13 @@ const Comments = ({ children, data }: IComments) => {
         postId,
         content: content.content,
       };
-      const response = await axios.post("/api/comments", comment);
+      try {
+        const response = await axios.post("/api/comments", comment);
+        if (!response) throw new Error("something went wrong");
+        createStatus("Success", "comment added", "success");
+      } catch (error) {
+        createStatus("Error", "something went wrong", "error");
+      }
     }
   };
 

@@ -1,13 +1,18 @@
-import { IPostElement } from "../../pages/index";
-import style from "../../styles/PostScreen.module.css";
+import React, { useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import { useSession } from "next-auth/client";
+import moment from "moment";
+
 import PostModel from "../../models/post";
 import Comment from "../../models/comment";
+
 import dbConnect from "../../lib/dbConnect";
+
+import { IPostElement } from "../../pages/index";
 import Comments from "../../components/Comments/Comments";
-import { useSession } from "next-auth/client";
-import React, { useEffect, useState } from "react";
 import CommentElement from "../../components/Comment/Comment";
+
+import style from "../../styles/PostScreen.module.css";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   await dbConnect();
@@ -51,7 +56,6 @@ export default function PostScreen({
   const [commentData, setCommentData] = useState<ICommentData>();
   const [commentsList, setCommentsList] = useState<React.ReactNode>();
   const post = JSON.parse(postInfo);
-  const commentsArr = JSON.parse(comments);
 
   const { title, author, createdAt, content, _id } = post || {};
 
@@ -64,18 +68,20 @@ export default function PostScreen({
       };
       setCommentData(data);
     }
+    const commentsArr = JSON.parse(comments);
     const commArr = commentsArr.map((element: any) => {
       return (
         <CommentElement
           key={element._id}
           author={element.author}
           content={element.content}
-          date={element.createdAt}
+          date={moment(element.createdAt).format("DD-MM-YY, h:mm")}
         />
       );
     });
     setCommentsList(commArr);
-  }, [_id, session]);
+  }, [_id, session, comments]);
+
   if (!postInfo) return <h1>Loading...</h1>;
 
   return (
@@ -83,7 +89,7 @@ export default function PostScreen({
       <h1 className={style.header}>{title}</h1>
       <div className={style.post}>
         <p>{author}</p>
-        <p>{createdAt}</p>
+        <p>{moment(createdAt).format("DD-MM-YY")}</p>
       </div>
       <p className={style.text}>{content}</p>
       <Comments data={commentData}>{commentsList}</Comments>
