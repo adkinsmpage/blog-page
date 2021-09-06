@@ -51,13 +51,13 @@ export default function ProfileScreen({ session, userInfo }: IProfileScreen) {
       createStatus("Success", "your data was updated", "success");
       route.reload();
     } catch (error) {
-      createStatus("Error", `${error.message}`, "error");
+      createStatus("Error", "something went wrong", "error");
     }
   };
 
   return (
     <div className={style.wrapper}>
-      <h1 className={style.header}>Profile page</h1>
+      <p className={style.header}>Profile page</p>
       {!isEdit && (
         <div className={style.userData}>
           <p>
@@ -100,7 +100,10 @@ export default function ProfileScreen({ session, userInfo }: IProfileScreen) {
           </form>
         </>
       )}
-      <button onClick={() => setIsEdit((prevVal) => !prevVal)}>
+      <button
+        onClick={() => setIsEdit((prevVal) => !prevVal)}
+        className={style.editButton}
+      >
         {isEdit ? "Cancel" : "Edit data"}
       </button>
     </div>

@@ -1,13 +1,22 @@
 .wrapper {
   display: grid;
-  padding: 5%;
+  margin-top: 127px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .header {
-  margin: 5vh 0;
+  font-size: 3.1rem;
+  text-align: center;
+  margin-bottom: 50px;
+}
+.userData {
+  padding: 2%;
 }
 .userData p {
   font-size: 2.3rem;
   font-weight: bold;
+  padding: 1%;
 }
 .userData p span {
   font-size: 2.3rem;
@@ -15,6 +24,7 @@
 }
 .userData button {
   margin-top: 40px;
+  background-color: red;
 }
 .updateBtn {
   width: 130px;
@@ -28,4 +38,8 @@
   margin-bottom: 15px;
   font-size: 1rem;
   font-weight: lighter;
+}
+.editButton {
+  max-width: 200px;
+  margin: 50px auto;
 }
