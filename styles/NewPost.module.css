@@ -1,4 +1,6 @@
 .wrapper {
+  max-width: 800px;
+  margin: 0 auto;
 }
 .wrapper h1 {
   text-align: center;
@@ -19,5 +21,16 @@
 .form button {
   width: 45%;
   align-self: flex-end;
-  background-color: rgba(128, 128, 128, 0.123);
+  max-width: 250px;
+}
+
+@media (min-width: 630px) {
+  .form textarea {
+    min-height: 50vh;
+
+    padding: 2.5%;
+  }
+  .form input {
+    padding: 2.5%;
+  }
 }

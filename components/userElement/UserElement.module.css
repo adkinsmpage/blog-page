@@ -1,9 +1,42 @@
 .wrapper {
-  background-color: rgb(224, 224, 224);
+  background-color: #e9ecef;
   margin: 3% 0;
   min-height: 15vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2%;
+}
+
+.infoWrapper {
+  flex-shrink: 1;
+}
+.infoWrapper span {
+  font-weight: bold;
+}
+.buttonsWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 610px) {
+  .wrapper {
+    margin-top: 120px;
+  }
+  .buttonsWrapper {
+    flex-direction: row;
+  }
+}
+@media (min-width: 700px) {
+  .wrapper {
+    margin-top: 97px;
+  }
+}
+@media (min-width: 1000px) {
+  .infoWrapper {
+    display: flex;
+  }
+  .infoWrapper p {
+    margin-right: 2%;
+  }
 }

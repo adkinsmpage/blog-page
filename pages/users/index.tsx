@@ -1,9 +1,13 @@
-import { GetStaticProps } from "next";
-import { getSession, useSession } from "next-auth/client";
 import React, { useEffect, useState } from "react";
+import { GetStaticProps } from "next";
+import { useSession } from "next-auth/client";
+
 import UserElement, { IUser } from "../../components/userElement/UserElement";
-import dbConnect from "../../lib/dbConnect";
 import User from "../../models/user";
+
+import dbConnect from "../../lib/dbConnect";
+
+import style from "../../styles/UsersList.module.css";
 
 export const getStaticProps: GetStaticProps = async () => {
   await dbConnect();
@@ -30,5 +34,10 @@ export default function Users({ usersList }: any) {
     });
     setUsersElements(usersArr);
   }, [usersList, session]);
-  return <div>{loading ? "Loading..." : usersElements}</div>;
+
+  return (
+    <div className={style.wrapper}>
+      {loading ? "Loading..." : usersElements}
+    </div>
+  );
 }

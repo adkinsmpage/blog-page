@@ -41,8 +41,8 @@ const UserElement = ({ user }: IUserElement) => {
       setRemoveModal(false);
       router.reload();
       createStatus("Success", "user deleted", "success");
-    } catch (error) {
-      createStatus("Error", error.message, "error");
+    } catch (error: any) {
+      createStatus("Error", error?.message, "error");
     }
   };
 
@@ -62,20 +62,33 @@ const UserElement = ({ user }: IUserElement) => {
       setIsEditActive(false);
       router.reload();
       createStatus("Success", "user updated", "success");
-    } catch (error) {
-      createStatus("Error", error.message, "error");
+    } catch (error: any) {
+      createStatus("Error", error?.message, "error");
     }
   };
   return (
     <div className={style.wrapper}>
       <div className={style.infoWrapper}>
-        <p>name: {name}</p>
-        <p>email: {email}</p>
-        <p>isAdmin: {`${isAdmin}`}</p>
+        <p>
+          name: <span>{name}</span>{" "}
+        </p>
+        <p>
+          email: <span>{email}</span>{" "}
+        </p>
+        <p>
+          isAdmin: <span>{`${isAdmin}`}</span>{" "}
+        </p>
       </div>
       <div className={style.buttonsWrapper}>
-        <button onClick={() => setIsEditActive(true)}>edit</button>
-        <button onClick={() => setRemoveModal(true)}>remove</button>
+        <button
+          className={"secondary-btn"}
+          onClick={() => setIsEditActive(true)}
+        >
+          edit
+        </button>
+        <button className="secondary-btn" onClick={() => setRemoveModal(true)}>
+          remove
+        </button>
       </div>
       {isEditActive && (
         <EditUser
