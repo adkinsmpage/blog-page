@@ -76,6 +76,7 @@ export default function PostScreen({
           author={element.author}
           content={element.content}
           date={moment(element.createdAt).format("DD-MM-YY, h:mm")}
+          commentId={element._id}
         />
       );
     });

@@ -10,7 +10,7 @@ export default async function handler(
   if (req.method !== "POST") return;
   const data = req.body;
 
-  const session = getSession({ req });
+  const session = await getSession({ req });
   if (!session) {
     res.status(401).send({ message: "Not authenticated" });
     return;
