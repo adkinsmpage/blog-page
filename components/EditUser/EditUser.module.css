@@ -5,6 +5,7 @@
   background-color: rgba(21, 22, 22, 0.938);
   top: 0;
   left: 0;
+  z-index: 2;
 }
 .wrapper {
   border-radius: 10px;

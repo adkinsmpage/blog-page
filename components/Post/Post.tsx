@@ -1,14 +1,16 @@
-import { IPostElement } from "../../pages";
-import style from "./Post.module.css";
-import { useRouter } from "next/router";
-import moment from "moment";
-import { DATA_FORMAT } from "../../utils/consts";
-import { getSession } from "next-auth/client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { getSession } from "next-auth/client";
 import axios from "axios";
+import moment from "moment";
+
 import { useCreateStatus } from "../../lib/createStatus";
+
+import { IPostElement } from "../../pages";
+import { DATA_FORMAT } from "../../utils/consts";
 import Modal from "../Modal/Modal";
-import { route } from "next/dist/server/router";
+
+import style from "./Post.module.css";
 
 interface IPost {
   data: IPostElement;
@@ -18,23 +20,18 @@ export default function Post({ data }: IPost) {
   const [session, setSession] = useState<any>();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { createStatus } = useCreateStatus();
+  const router = useRouter();
 
   const handleGetSession = async () => {
     const session = await getSession();
     setSession(session);
   };
 
-  useEffect(() => {
-    handleGetSession();
-  }, []);
-
-  console.log(data);
-
-  const router = useRouter();
   const cutText = (length: number, text: string) => {
     if (text.length <= length) return text;
     return `${text.substr(0, length)}...`;
   };
+
   const removePost = async () => {
     createStatus("Waiting...", "waiting for server", "pending");
     try {
@@ -48,6 +45,10 @@ export default function Post({ data }: IPost) {
   };
 
   const closeModal = () => setIsModalVisible(false);
+
+  useEffect(() => {
+    handleGetSession();
+  }, []);
 
   return (
     <div className={style.wrapper}>
