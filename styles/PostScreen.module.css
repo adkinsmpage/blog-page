@@ -1,20 +1,30 @@
 .wrapper {
-  padding: 4%;
+  padding: 2%;
 }
 .header {
-  text-align: center;
-  margin-top: 20px;
+  margin: 10px 0 4%;
+  color: #e8590c;
+  font-size: 3.9rem;
 }
 .postInfo {
+  font-size: 1.6rem;
   display: flex;
   justify-content: space-around;
-  padding: 10px 0;
-  border-top: 1px solid darkslateblue;
-  border-bottom: 1px solid darkslateblue;
+  padding: 1.5% 0;
+  border-top: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
   margin: 25px auto;
+  color: #495057;
 }
 .text {
+  margin-top: 4%;
   font-size: 2.5rem;
   letter-spacing: 1px;
   line-height: 1.5;
+}
+
+@media (min-width: 1000px) {
+  .text {
+    max-width: 80%;
+  }
 }

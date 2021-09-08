@@ -88,7 +88,7 @@ export default function PostScreen({
   return (
     <div className={style.wrapper}>
       <h1 className={style.header}>{title}</h1>
-      <div className={style.post}>
+      <div className={style.postInfo}>
         <p>{author}</p>
         <p>{moment(createdAt).format("DD-MM-YY")}</p>
       </div>

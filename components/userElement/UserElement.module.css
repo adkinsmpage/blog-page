@@ -1,6 +1,6 @@
 .wrapper {
   background-color: #e9ecef;
-  margin: 3% 0;
+  margin-bottom: 3%;
   min-height: 15vh;
   display: flex;
   align-items: center;
@@ -20,18 +20,11 @@
 }
 
 @media (min-width: 610px) {
-  .wrapper {
-    margin-top: 120px;
-  }
   .buttonsWrapper {
     flex-direction: row;
   }
 }
-@media (min-width: 700px) {
-  .wrapper {
-    margin-top: 97px;
-  }
-}
+
 @media (min-width: 1000px) {
   .infoWrapper {
     display: flex;

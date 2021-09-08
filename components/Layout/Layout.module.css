@@ -4,6 +4,7 @@
   flex-direction: column;
 }
 .content {
+  padding-top: 100px;
   flex-grow: 1;
   min-height: 90vh;
 }
