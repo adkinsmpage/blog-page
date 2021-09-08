@@ -17,10 +17,10 @@ export default function Notification({ notificationObj }: INotificationProps) {
       style={{
         backgroundColor: `${
           status === "error"
-            ? "darkred"
+            ? "#e03131"
             : status === "success"
-            ? "darkgreen"
-            : "darkblue"
+            ? "#099268"
+            : "#1971c2"
         }`,
       }}
       onClick={notificationCtx.hideNotification}

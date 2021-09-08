@@ -1,7 +1,10 @@
-import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
+import axios from "axios";
+
 import { useCreateStatus } from "../../lib/createStatus";
+
 import { ICommentData } from "../../pages/posts/[id]";
+
 import style from "./Comments.module.css";
 
 interface IComments {
@@ -50,7 +53,6 @@ const Comments = ({ children, data }: IComments) => {
         {errors.content && <p>field is required, min. Length: 5</p>}
         <button>add comment</button>
       </form>
-
       <div className={style.list}>{children}</div>
     </div>
   );
