@@ -17,7 +17,9 @@ export default function Modal({
         <p className={style.header}>{text}</p>
         <div className={style.buttonsWrapper}>
           <button onClick={confirmCallback}>yes</button>
-          <button onClick={cancelCallback}>no</button>
+          <button onClick={cancelCallback} className="secondary-btn">
+            no
+          </button>
         </div>
       </div>
     </div>
