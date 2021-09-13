@@ -1,12 +1,22 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  margin: 6% 0;
 }
 .info {
   display: flex;
   justify-content: space-between;
+  background-color: #f1f3f5;
+  padding: 3%;
+}
+.content {
+  padding: 3%;
 }
 .removeBtn {
-  color: red;
-  text-align: end;
+  color: #c92a2a;
+  justify-self: flex-start;
+  align-self: flex-end;
+  margin: 0;
+  padding: 0;
+  width: 40%;
 }
