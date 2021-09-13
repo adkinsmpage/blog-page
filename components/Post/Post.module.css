@@ -1,7 +1,7 @@
 .wrapper {
-  padding: 10% 3%;
+  padding: 0 3% 10%;
   max-height: 60vh;
-  margin: 10% auto;
+  margin: 1% auto 14% auto;
   position: relative;
 }
 
@@ -37,4 +37,15 @@
   bottom: 0;
   color: #f76707;
   cursor: pointer;
+}
+@media (min-width: 750px) {
+  .wrapper {
+    padding: 0 3% 7%;
+    margin-bottom: 10%;
+  }
+}
+@media (min-width: 750px) {
+  .postInformation {
+    margin: 1% auto;
+  }
 }
