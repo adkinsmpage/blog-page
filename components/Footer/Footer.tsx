@@ -2,6 +2,7 @@ import style from "./Footer.module.css";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/client";
+import axios from "axios";
 
 interface IEmailMessage {
   name: string;
@@ -19,7 +20,9 @@ export default function Footer() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data: IEmailMessage) => console.log(data);
+  const onSubmit = async (data: IEmailMessage) => {
+    const response = await axios.post("api/contact", data);
+  };
   const logoutHandler = async () => {
     const data = await signOut({ redirect: false, callbackUrl: "/" });
     router.push(data.url);
@@ -57,6 +60,9 @@ export default function Footer() {
             placeholder="name"
             {...register("name", { required: true })}
           />
+          {errors.name && (
+            <p className={style.errorMessage}>Name is required</p>
+          )}
           <input
             type="email"
             placeholder="email"
@@ -65,10 +71,14 @@ export default function Footer() {
               pattern: EMAIL_VALIDATION,
             })}
           />
+          {errors.email && <p className={style.errorMessage}>Invalid email</p>}
           <textarea
             placeholder="your message"
             {...register("content", { required: true, minLength: 2 })}
           />
+          {errors.content && (
+            <p className={style.errorMessage}>Required (min. length 2)</p>
+          )}
           <button className={style.formSubmitBtn}>Send</button>
         </form>
       </div>

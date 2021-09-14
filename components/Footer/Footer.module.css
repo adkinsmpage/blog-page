@@ -3,7 +3,7 @@
   background-color: #495057;
   position: relative;
   margin-top: 100px;
-  height: 290px;
+  min-height: 330px;
 }
 .menu {
   display: none;
@@ -51,6 +51,11 @@
 .list li:hover {
   background-color: #e8590c;
   color: white;
+}
+
+.formWrapper .errorMessage {
+  font-size: 1.3rem;
+  margin: 0 0 2%;
 }
 
 @media (min-width: 700px) {
