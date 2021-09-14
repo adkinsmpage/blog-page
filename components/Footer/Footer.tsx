@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/client";
 import axios from "axios";
+import { useCreateStatus } from "../../lib/createStatus";
 
 interface IEmailMessage {
   name: string;
@@ -15,13 +16,22 @@ const EMAIL_VALIDATION = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function Footer() {
   const router = useRouter();
   const [session, loading] = useSession();
+  const { createStatus } = useCreateStatus();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = async (data: IEmailMessage) => {
-    const response = await axios.post("api/contact", data);
+    try {
+      createStatus("Waiting...", "sending message...", "pending");
+      const response = await axios.post("api/contact", data);
+      if (!response) throw new Error("something went wrong");
+      createStatus("Thank you!", "Message sent", "success");
+      router.reload();
+    } catch (error: any) {
+      createStatus("Error", error.message, "error");
+    }
   };
   const logoutHandler = async () => {
     const data = await signOut({ redirect: false, callbackUrl: "/" });
