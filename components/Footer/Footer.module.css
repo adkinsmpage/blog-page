@@ -5,6 +5,7 @@
   margin-top: 100px;
   min-height: 330px;
 }
+
 .menu {
   display: none;
 }
@@ -64,9 +65,15 @@
     background-color: #ced4da;
     position: relative;
     margin-top: 100px;
+
+    height: auto;
+  }
+  .content {
+    max-width: 1200px;
+
     display: flex;
     justify-content: space-around;
-    height: auto;
+    margin: 0 auto;
   }
   .formWrapper {
     padding: 10px;
