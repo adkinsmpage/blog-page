@@ -17,12 +17,20 @@
   top: -50px;
   left: 50%;
   transform: translateX(-50%);
-  max-width: 900px;
+  max-width: 300px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 .formWrapper form {
   display: flex;
   flex-direction: column;
 }
+.formWrapper textarea {
+  max-width: 280px;
+  max-height: 400px;
+  min-width: 150px;
+  min-height: 50px;
+}
+
 .formWrapper p {
   font-size: 2.7rem;
   text-align: center;
@@ -35,6 +43,11 @@
   margin: 10px auto;
   color: white;
   border-color: white;
+}
+.formSubmitBtn:hover,
+.formSubmitBtn:active {
+  color: #f8f9fa;
+  border-color: #f8f9fa;
 }
 .list {
   display: flex;

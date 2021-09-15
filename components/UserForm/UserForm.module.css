@@ -1,6 +1,7 @@
 .wrapper {
   display: grid;
   justify-items: center;
+  max-width: 350px;
 }
 
 .error {
@@ -12,4 +13,9 @@
   width: 90%;
   margin: 0 auto;
   font-size: 0.9rem;
+}
+@media (min-width: 500px) {
+  .wrapper {
+    margin: 0 auto;
+  }
 }
