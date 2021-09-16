@@ -6,6 +6,7 @@ import { useSession, signOut } from "next-auth/client";
 
 export default function NavBar() {
   const [isVisible, setIsVisible] = useState(false);
+
   const [session, loading] = useSession();
 
   const router = useRouter();
@@ -37,6 +38,13 @@ export default function NavBar() {
         <nav className={isVisible ? style.navVisible : style.nav}>
           <ul className={style.list}>
             <li onClick={() => goTo("/")}>Blog</li>
+
+            {session && session.user.isAdmin && (
+              <>
+                <li onClick={() => goTo("/posts/newPost")}>New Post</li>
+                <li onClick={() => goTo("/users")}>All users</li>
+              </>
+            )}
             <li
               onClick={() =>
                 goTo(`${session ? "/user/profile" : "/user/login"}`)
@@ -44,14 +52,13 @@ export default function NavBar() {
             >
               {session ? "Profile" : "Login"}
             </li>
-            <li onClick={() => goTo("https://github.com/atrykp")}>Github</li>
             {session && <li onClick={logoutHandler}>Logout</li>}
-            {session && session.user.isAdmin && (
-              <>
-                <li onClick={() => goTo("/posts/newPost")}>New Post</li>
-                <li onClick={() => goTo("/users")}>All users</li>
-              </>
-            )}
+            <li
+              className={style.github}
+              onClick={() => goTo("https://github.com/atrykp")}
+            >
+              Github
+            </li>
           </ul>
         </nav>
       </div>

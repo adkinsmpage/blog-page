@@ -50,6 +50,7 @@
   transition: 0.2s ease-in;
   font-size: 1.6rem;
   transition: 0.2s;
+  border-radius: 3px;
 }
 .list li:hover {
   background-color: #e8590c;
@@ -59,6 +60,7 @@
 .menuIcon {
   justify-self: flex-end;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 @media (min-width: 630px) {
@@ -75,5 +77,11 @@
   }
   .menuIcon {
     display: none !important;
+  }
+  .github {
+    background-color: #e8590c;
+    color: white;
+    font-weight: bold;
+    border-radius: 3px;
   }
 }
