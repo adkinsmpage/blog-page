@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import {
+  GetServerSideProps,
+  GetStaticPaths,
+  GetStaticProps,
+  InferGetStaticPropsType,
+} from "next";
 import { useSession } from "next-auth/client";
 import moment from "moment";
 
@@ -18,7 +23,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   await dbConnect();
   const postArr = await PostModel.find({}, { _id: 1 });
 
-  const paths = postArr.map((element: IPostElement) => ({
+  const paths = await postArr.map((element: IPostElement) => ({
     params: { id: element._id.toString() },
   }));
 
@@ -29,6 +34,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  await dbConnect();
   const postData = await PostModel.findById(params?.id);
   const comments = await Comment.find({ postId: params?.id });
 
@@ -37,7 +43,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       postInfo: JSON.stringify(postData),
-      comments: JSON.stringify(comments),
+      comments: comments.length > 0 ? JSON.stringify(comments) : "[]",
     },
   };
 };
@@ -55,7 +61,7 @@ export default function PostScreen({
   const [session, loading] = useSession();
   const [commentData, setCommentData] = useState<ICommentData>();
   const [commentsList, setCommentsList] = useState<React.ReactNode>();
-  const post = JSON.parse(postInfo);
+  const post = postInfo ? JSON.parse(postInfo) : null;
 
   const { title, author, createdAt, content, _id } = post || {};
 

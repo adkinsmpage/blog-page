@@ -3,33 +3,22 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 
 import style from "../../../styles/EditPost.module.css";
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetStaticPaths, InferGetServerSidePropsType } from "next";
 import PostModel from "../../../models/post";
 import dbConnect from "../../../lib/dbConnect";
 import axios from "axios";
 import { useCreateStatus } from "../../../lib/createStatus";
+import { GetServerSideProps } from "next";
 
 type EditInputs = {
   title: string;
   content: string;
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   await dbConnect();
-  const postArr = await PostModel.find({}, { _id: 1 });
 
-  const paths = postArr.map((element: IPostElement) => ({
-    params: { editPost: element._id.toString() },
-  }));
-
-  return {
-    paths,
-    fallback: true,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const postData = await PostModel.findById(params?.editPost);
+  const postData = await PostModel.findById(context.params?.editPost);
 
   if (!postData) return { notFound: true };
 
@@ -42,7 +31,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export default function EditPost({
   postInfo,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { createStatus } = useCreateStatus();
   const router = useRouter();
   const {
