@@ -1,11 +1,12 @@
-import style from "../../styles/NewPost.module.css";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import { getSession } from "next-auth/client";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { useCreateStatus } from "../../lib/createStatus";
 import { useRouter } from "next/router";
+import axios from "axios";
 
+import { getSession } from "next-auth/client";
+import { useCreateStatus } from "../../lib/createStatus";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+
+import style from "../../styles/NewPost.module.css";
 interface INewPost {
   title: string;
   content: string;
@@ -36,7 +37,7 @@ export default function NewPost({
 
   return (
     <div className={style.wrapper}>
-      <h1>add new post</h1>
+      <h1>Add new post</h1>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"

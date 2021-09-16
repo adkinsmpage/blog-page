@@ -1,14 +1,15 @@
-import { IPostElement } from "../../index";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
+import axios from "axios";
 
-import style from "../../../styles/EditPost.module.css";
-import { GetStaticPaths, InferGetServerSidePropsType } from "next";
+import { InferGetServerSidePropsType } from "next";
+
 import PostModel from "../../../models/post";
 import dbConnect from "../../../lib/dbConnect";
-import axios from "axios";
 import { useCreateStatus } from "../../../lib/createStatus";
-import { GetServerSideProps } from "next";
+
+import style from "../../../styles/EditPost.module.css";
 
 type EditInputs = {
   title: string;
@@ -58,7 +59,7 @@ export default function EditPost({
 
   return (
     <div className={style.wrapper}>
-      <p className={style.header}>Edit post</p>
+      <h1 className={style.header}>Edit post</h1>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         <input
           placeholder="title"

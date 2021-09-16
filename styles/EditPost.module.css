@@ -10,7 +10,13 @@
 }
 .form textarea,
 .form input {
-  width: 90%;
+  min-width: 90%;
+  max-width: 300px;
+}
+.form textarea {
+  height: 50vh;
+  max-height: 500px;
+  min-height: 300px;
 }
 
 .buttonsWrapper {
@@ -19,8 +25,8 @@
   align-items: center;
 }
 .header {
-  font-size: 2rem;
   align-self: center;
+  margin-top: 5%;
 }
 
 .errorMessage {
