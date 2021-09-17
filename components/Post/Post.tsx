@@ -51,13 +51,11 @@ export default function Post({ data }: IPost) {
   }, []);
 
   return (
-    <div className={style.wrapper}>
-      <h2
-        onClick={() => router.push(`/posts/${data._id}`)}
-        className={style.title}
-      >
-        {cutText(40, data.title)}
-      </h2>
+    <div
+      className={style.wrapper}
+      onClick={() => router.push(`/posts/${data._id}`)}
+    >
+      <h2 className={style.title}>{cutText(40, data.title)}</h2>
       <div className={style.postInformation}>
         <p>{data.author}</p>
         <p>{moment(data.createdAt).format(DATA_FORMAT)}</p>

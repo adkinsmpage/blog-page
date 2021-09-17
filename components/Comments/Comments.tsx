@@ -22,6 +22,7 @@ const Comments = ({ children, data }: IComments) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<CommentInput>();
   const [session, loading] = useSession();
@@ -42,6 +43,7 @@ const Comments = ({ children, data }: IComments) => {
         if (!response) throw new Error("something went wrong");
         createStatus("Success", "comment added", "success");
         mutate(`/api/comments/${postId}`);
+        reset();
       } catch (error) {
         createStatus("Error", "something went wrong", "error");
       }

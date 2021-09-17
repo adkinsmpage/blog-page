@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useSWRConfig } from "swr";
 import { getSession } from "next-auth/client";
 import router from "next/router";
 import { useState } from "react";
@@ -23,6 +24,8 @@ const UserElement = ({ user }: IUserElement) => {
   const [isEditActive, setIsEditActive] = useState(false);
   const [removeModal, setRemoveModal] = useState(false);
 
+  const { mutate } = useSWRConfig();
+
   const { name, email, isAdmin, _id } = user || {};
 
   const { createStatus } = useCreateStatus();
@@ -39,8 +42,8 @@ const UserElement = ({ user }: IUserElement) => {
       );
       if (!data) throw new Error("something went wrong");
       setRemoveModal(false);
-      router.reload();
       createStatus("Success", "user deleted", "success");
+      mutate(`/api/user`);
     } catch (error: any) {
       createStatus("Error", error?.message, "error");
     }
@@ -60,7 +63,7 @@ const UserElement = ({ user }: IUserElement) => {
       const response = await axios.patch("/api/user", updateUserObj);
       if (!response) throw new Error("something went wrong");
       setIsEditActive(false);
-      router.reload();
+      mutate(`/api/user`);
       createStatus("Success", "user updated", "success");
     } catch (error: any) {
       createStatus("Error", error?.message, "error");

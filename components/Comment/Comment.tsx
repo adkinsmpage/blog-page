@@ -7,18 +7,27 @@ import Loader from "../Loader/Loader";
 import Modal from "../Modal/Modal";
 
 import style from "./Comment.module.css";
+import { useSWRConfig } from "swr";
 
 interface CommentData {
   author: string;
   content: string;
   date: string;
   commentId: string;
+  postId: string;
 }
 
-const CommentElement = ({ author, content, date, commentId }: CommentData) => {
+const CommentElement = ({
+  author,
+  content,
+  date,
+  commentId,
+  postId,
+}: CommentData) => {
   const [isModal, setIsModal] = useState(false);
   const [session, loading] = useSession();
   const { createStatus } = useCreateStatus();
+  const { mutate } = useSWRConfig();
 
   const removeComment = async () => {
     try {
@@ -26,6 +35,7 @@ const CommentElement = ({ author, content, date, commentId }: CommentData) => {
       const response = await axios.delete(`/api/comments/${commentId}`);
       if (!response) throw new Error("Can't remove comment");
       createStatus("Success", "comment removed", "success");
+      mutate(`/api/comments/${postId}`);
       closeModal();
     } catch (error: any) {
       createStatus("Error", error.message, "error");
