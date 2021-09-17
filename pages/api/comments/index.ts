@@ -7,16 +7,17 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "POST") return;
-  const data = req.body;
+  if (req.method === "POST") {
+    const data = req.body;
 
-  const session = await getSession({ req });
-  if (!session) {
-    res.status(401).send({ message: "Not authenticated" });
-    return;
+    const session = await getSession({ req });
+    if (!session) {
+      res.status(401).send({ message: "Not authenticated" });
+      return;
+    }
+
+    await dbConnect();
+    const response = await Comment.create(data);
+    res.status(201).json(response);
   }
-
-  await dbConnect();
-  const response = await Comment.create(data);
-  res.status(201).json(response);
 }

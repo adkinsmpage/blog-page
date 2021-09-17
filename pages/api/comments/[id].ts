@@ -18,5 +18,12 @@ export default async function handler(
     await dbConnect();
     const response = await Comment.findByIdAndDelete(id);
     res.status(201).json(response);
+  } else if (req.method === "GET") {
+    const { id: postId } = req.query;
+
+    await dbConnect();
+    const comments = await Comment.find({ postId });
+    if (!comments) res.status(500).send({ message: "something went wrong" });
+    res.status(201).json(comments);
   }
 }

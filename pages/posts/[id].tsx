@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  GetServerSideProps,
-  GetStaticPaths,
-  GetStaticProps,
-  InferGetStaticPropsType,
-} from "next";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import { useSession } from "next-auth/client";
 import moment from "moment";
+import useSWR from "swr";
 
 import PostModel from "../../models/post";
 import Comment from "../../models/comment";
@@ -36,14 +32,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   await dbConnect();
   const postData = await PostModel.findById(params?.id);
-  const comments = await Comment.find({ postId: params?.id });
 
   if (!postData) return { notFound: true };
 
   return {
     props: {
       postInfo: JSON.stringify(postData),
-      comments: comments.length > 0 ? JSON.stringify(comments) : "[]",
     },
   };
 };
@@ -54,9 +48,10 @@ export interface ICommentData {
   author: string;
 }
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 export default function PostScreen({
   postInfo,
-  comments,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [session, loading] = useSession();
   const [commentData, setCommentData] = useState<ICommentData>();
@@ -64,6 +59,7 @@ export default function PostScreen({
   const post = postInfo ? JSON.parse(postInfo) : null;
 
   const { title, author, createdAt, content, _id } = post || {};
+  const { data: commentsArr, error } = useSWR(`/api/comments/${_id}`, fetcher);
 
   useEffect(() => {
     if (session) {
@@ -74,8 +70,7 @@ export default function PostScreen({
       };
       setCommentData(data);
     }
-    const commentsArr = JSON.parse(comments);
-    const commArr = commentsArr.map((element: any) => {
+    const commArr = commentsArr?.map((element: any) => {
       return (
         <CommentElement
           key={element._id}
@@ -87,7 +82,7 @@ export default function PostScreen({
       );
     });
     setCommentsList(commArr);
-  }, [_id, session, comments]);
+  }, [_id, session, commentsArr]);
 
   if (!postInfo) return <h1>Loading...</h1>;
 
