@@ -5,7 +5,6 @@ import moment from "moment";
 import useSWR from "swr";
 
 import PostModel from "../../models/post";
-import Comment from "../../models/comment";
 
 import dbConnect from "../../lib/dbConnect";
 
